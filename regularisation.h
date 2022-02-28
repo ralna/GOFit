@@ -18,17 +18,32 @@
  * Regularisation algorithm control parameter structure
  */
 struct Control{
+
+    // General regularisation algorithm controls
     int maxit = 200;     // maximum iterations
     double eps_g = 1e-4; // gradient stopping tolerance
     double eps_s = 1e-8; // step stopping tolerance
+
+    // Regularisation update parameters
+    double ETA1 = 0.1;         // decrease rho considered sufficient if above
+    double ETA2 = 0.75;        // decrease rho considered very successful if above
+    double GAMMA1 = sqrt(2.);  // amount to increase regularisation parameter
+    double GAMMA2 = sqrt(0.5); // amount to decrease regularisation parameter
+    double SIGMA_MIN = 1e-15;  // minimum regularisation parameter value
+    double SIGMA_MAX = 1e20;   // maximum regularisation parameter value
+
+    // Regularisation subproblem solve parameters
+    double SIGMA_LIM = 1e-8; // if J'J singular limit sigma to sigma_lim
+
 };
 
 /*
  * Regularisation algorithm inform parameter structure
  */
 struct Inform{
-    int iter;   // number of iterations perfomed
-    double obj; // objective value at optimum
+    int iter;     // number of iterations perfomed
+    double obj;   // objective value at minimum
+    double sigma; // regularisation parameter value at minimum
 };
 
 /*
@@ -43,7 +58,8 @@ struct Inform{
  *
  *  inform - inform structure with the following members:
  *      iter - number of iterations perfomed
- *      obj - objective value at optimum
+ *      obj - objective value at minimum
+ *      sigma - regularisation paramer value at minimum
  *
  *  m - number of residuals
  *
@@ -65,7 +81,7 @@ struct Inform{
  *
  * Outputs:
  *
- *  x - optimal point
+ *  x - minimal point
  *
  *  return value - 0 (converged) or 1 (iterations exceeded)
  */

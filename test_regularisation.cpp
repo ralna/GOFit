@@ -35,6 +35,8 @@ void eval_jac(Eigen::VectorXd &x, Eigen::MatrixXd &jac){
  */
 int main(){
 
+    printf("=+= Quadratic Regularisation Algorithm =+=\n");
+
     // Control
     Control control;
     control.eps_g = 1e-4;

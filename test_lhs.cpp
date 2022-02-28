@@ -19,12 +19,15 @@
 using std::cout;
 using std::endl;
 using Eigen::MatrixXd;
+using Eigen::VectorXd;
 
 int main(){
 
     int s = 3; // samples
     int n = 2; // dimension
     MatrixXd lhd(s,n);
+    VectorXd a {{-5.,0.}};
+    VectorXd b {{10.,15.}};
 
     cout << "=+= Latin Hypercube Test =+=" << endl;
     cout << "s = " << s << endl;
@@ -33,6 +36,11 @@ int main(){
     lhsdesign(s,n,lhd);
 
     cout << "Latin Unit Hypercube Design:" << endl;
+    cout << lhd << endl;
+
+    lhsdesign(s,n,a,b,lhd);
+
+    cout << "Latin Scaled Hypercube Design:" << endl;
     cout << lhd << endl;
 
 }

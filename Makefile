@@ -18,10 +18,14 @@ CXXFLAGS = -Wall -g -std=c++17
 INC = -I/usr/local/include/eigen3
 
 # What to build
-all: test_regularisation
+all: test_lhs test_regularisation test_multistart
 
 # These rules build the packages
+test_lhs: test_lhs.o lhs.o
+	$(CXX) $(CXXFLAGS) $(INC) -o $@ $^
 test_regularisation: test_regularisation.o regularisation.o
+	$(CXX) $(CXXFLAGS) $(INC) -o $@ $^
+test_multistart: test_multistart.o lhs.o regularisation.o multistart.o
 	$(CXX) $(CXXFLAGS) $(INC) -o $@ $^
 
 # The following rules build a source file from a variable
@@ -31,4 +35,6 @@ test_regularisation: test_regularisation.o regularisation.o
 # Rules to cleanup everything
 clean:
 	rm -f *.o
+	rm -f test_lhs
 	rm -f test_regularisation
+	rm -f test_multistart

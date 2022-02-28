@@ -15,7 +15,7 @@
 #include <Eigen/Core>
 
 /*
- * Generate Latin Unit Hypercube Design
+ * Generate Latin Hypercube Design on [0,1]^n
  *
  * Inputs:
  *
@@ -24,9 +24,26 @@
  *
  * Outputs:
  *
- *  lhd - latin unit hypercube design
+ *  lhd - latin hypercube design on [0,1]^n
  *
  */
 void lhsdesign(int s, int n, Eigen::MatrixXd &lhd);
+
+/*
+ * Generate Latin Hypercube Design on [a,b]^n
+ *
+ * Inputs:
+ *
+ *  s - number of samples
+ *  n - dimension of each sample
+ *  a - domain lower bounds
+ *  b - domain upper bounds
+ *
+ * Outputs:
+ *
+ *  lhd - latin hypercube design on [a,b]^n
+ *
+ */
+void lhsdesign(int s, int n, Eigen::VectorXd &a, Eigen::VectorXd &b, Eigen::MatrixXd &lhd);
 
 #endif

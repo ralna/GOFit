@@ -27,7 +27,7 @@ using Eigen::last;
 using std::shuffle;
 
 /*
- * Generate Latin Unit Hypercube Design
+ * Generate Latin Hypercube Design on [0,1]^n
  *
  * Inputs:
  *
@@ -36,7 +36,7 @@ using std::shuffle;
  *
  * Outputs:
  *
- *  lhd - latin unit hypercube design
+ *  lhd - latin hypercube design on [0,1]^n
  *
  */
 void lhsdesign(int s, int n, MatrixXd &lhd){
@@ -58,5 +58,31 @@ void lhsdesign(int s, int n, MatrixXd &lhd){
     for(int i = 0; i <n; i++){
         shuffle(perm.indices().data(), perm.indices().data()+s, engine);
         lhd(all,i) = perm * midpoints;
+    }
+}
+
+/*
+ * Generate Latin Hypercube Design on [a,b]^n
+ *
+ * Inputs:
+ *
+ *  s - number of samples
+ *  n - dimension of each sample
+ *  a - domain lower bounds
+ *  b - domain upper bounds
+ *
+ * Outputs:
+ *
+ *  lhd - latin hypercube design on [a,b]^n
+ *
+ */
+void lhsdesign(int s, int n, VectorXd &a, VectorXd &b, MatrixXd &lhd){
+
+    // Generate latin hypercube design on [0,1]^n
+    lhsdesign(s,n,lhd);
+
+    // Map latin hypercube design to [a,b]^n
+    for(int i = 0; i <n; i++){
+        lhd(all,i) = a(i) + lhd(all,i).array()*(b(i) - a(i));
     }
 }
