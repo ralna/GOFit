@@ -17,6 +17,7 @@
 // method aliases
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
+using std::function;
 using std::printf;
 using std::min;
 using std::max;
@@ -65,8 +66,8 @@ void reg_update(Control &control, VectorXd&, double, VectorXd&, double, MatrixXd
  *  return value - 0 (converged) or 1 (iterations exceeded)
  */
 int regularisation(Control &control, Inform &inform, int m, int n, VectorXd &x,
-                   void (*eval_res)(VectorXd&, VectorXd&),
-                   void (*eval_jac)(VectorXd&, MatrixXd&)){
+                   function<void(VectorXd&, VectorXd&)> eval_res,
+                   function<void(VectorXd&, MatrixXd&)> eval_jac){
 
     // Initialisation
     int k = 0;     // iteration counter

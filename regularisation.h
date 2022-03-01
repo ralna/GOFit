@@ -12,6 +12,7 @@
 #ifndef REGULARISATION_H
 #define REGULARISATION_H
 
+#include <functional>
 #include <Eigen/Core>
 
 /*
@@ -86,7 +87,7 @@ struct Inform{
  *  return value - 0 (converged) or 1 (iterations exceeded)
  */
 int regularisation(Control &control, Inform &inform, int m, int n, Eigen::VectorXd &x,
-                   void (*eval_res)(Eigen::VectorXd&, Eigen::VectorXd&),
-                   void (*eval_jac)(Eigen::VectorXd&, Eigen::MatrixXd&));
+                   std::function<void(Eigen::VectorXd&, Eigen::VectorXd&)> eval_res,
+                   std::function<void(Eigen::VectorXd&, Eigen::MatrixXd&)> eval_jac);
 
 #endif

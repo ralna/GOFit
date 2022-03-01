@@ -15,6 +15,7 @@
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 using Eigen::all;
+using std::function;
 
 /*
  * Multistart adpative quadratic regularisation
@@ -63,8 +64,8 @@ using Eigen::all;
 */
 int multistart(Control &control, Inform &inform, int samples, int m, int n, double eps_r,
                VectorXd &xl, VectorXd &xu, VectorXd &x,
-               void (*eval_res)(VectorXd&, VectorXd&),
-               void (*eval_jac)(VectorXd&, MatrixXd&)){
+               function<void(VectorXd&, VectorXd&)> eval_res,
+               function<void(VectorXd&, MatrixXd&)> eval_jac){
 
     // Initial variables
     double best_fmin = std::numeric_limits<double>::max();
