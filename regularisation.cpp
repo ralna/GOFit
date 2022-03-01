@@ -207,6 +207,6 @@ void reg(Control &control, MatrixXd &J, VectorXd &gradf, double &sigma, VectorXd
     auto qr = perJ.colPivHouseholderQr(); // then R'R = J'J + sigmaI
     auto R = qr.matrixR().topLeftCorner(n,n).template triangularView<Eigen::UpLoType::Upper>();
     auto RT = qr.matrixR().topLeftCorner(n,n).template triangularView<Eigen::UpLoType::Upper>().transpose();
-    auto t = RT.solve(-gradf); // solve R't = -gradf
-    s = R.solve(t);            // solve Rs = t
+    VectorXd t = RT.solve(-gradf); // solve R't = -gradf
+    s = R.solve(t);                // solve Rs = t
 }
