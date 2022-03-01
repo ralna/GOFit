@@ -77,6 +77,7 @@ int multistart(Control &control, Inform &inform, int samples, int m, int n, doub
     lhsdesign(samples,n,xu,xl,lhd);
 
     // For each Latin Hypercube Sample
+    #pragma omp parallel for
     for(int k = 0; k < samples; k++){
 
         // Get Latin Hypercube Sample
@@ -87,28 +88,34 @@ int multistart(Control &control, Inform &inform, int samples, int m, int n, doub
         eval_res(x_k, r);
         double r_norm2 = r.squaredNorm();
 
-        // break if residual already small enough
+        // if residual already small enough no need to optimize
         if(r_norm2 < eps_r){
-            x = x_k;
-            best_fmin = 0.5*r_norm2;
-            best_iter = 0;
-            best_sigma = std::numeric_limits<double>::quiet_NaN();
-            best_status = 0;
-            best_run = k;
-            break;
-        }
 
-        // run adaptive quadratic regularisation algorithm
-        int status = regularisation(control, inform, m, n, x_k, eval_res, eval_jac);
+            // check if we have found a better minimum compared to last stored best minimum
+            if(0.5*r_norm2 < best_fmin){
+                x = x_k;
+                best_fmin = 0.5*r_norm2;
+                best_iter = 0;
+                best_sigma = std::numeric_limits<double>::quiet_NaN();
+                best_status = 0;
+                best_run = k;
+            }
 
-        // check if we have found a better minimum compared to last stored best minimum
-        if(inform.obj < best_fmin){
-            x = x_k;
-            best_fmin = inform.obj;
-            best_iter = inform.iter;
-            best_sigma = inform.sigma;
-            best_status = status;
-            best_run = k;
+        }else{ // otherwise need to run a local optimization algorithm
+
+            // run adaptive quadratic regularisation algorithm
+            int status = regularisation(control, inform, m, n, x_k, eval_res, eval_jac);
+
+            // check if we have found a better minimum compared to last stored best minimum
+            if(inform.obj < best_fmin){
+                x = x_k;
+                best_fmin = inform.obj;
+                best_iter = inform.iter;
+                best_sigma = inform.sigma;
+                best_status = status;
+                best_run = k;
+            }
+
         }
 
     }

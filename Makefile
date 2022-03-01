@@ -2,18 +2,18 @@
 ############################
 CC = gcc
 CXX = g++
-CFLAGS = -Wall -g -std=c11
-CXXFLAGS = -Wall -g -std=c++17
+CFLAGS = -Wall -g -std=c11 -fopenmp
+CXXFLAGS = -Wall -g -std=c++17 -fopenmp
 ############################
 #CC = icc
 #CXX = icpc
-#CFLAGS = -Wall -g -std=c11
-#CXXFLAGS = -Wall -Wextra -g -std=c++17
+#CFLAGS = -Wall -g -std=c11 -qopenmp
+#CXXFLAGS = -Wall -Wextra -g -std=c++17 -qopenmp
 ############################
 #CC = icx
 #CXX = icpx
-#CFLAGS = -Wall -g -std=c11
-#CXXFLAGS = -Wall -g -std=c++17
+#CFLAGS = -Wall -g -std=c11 -qopenmp
+#CXXFLAGS = -Wall -g -std=c++17 -qopenmp
 ############################
 INC = -I/usr/local/include/eigen3
 
