@@ -61,7 +61,7 @@ using std::function;
  *  x - candidate global minimum
  *
  *  return value - 0 (converged) or 1 (iterations exceeded)
-*/
+ */
 int multistart(Control &control, Inform &inform, int samples, int m, int n, double eps_r,
                VectorXd &xl, VectorXd &xu, VectorXd &x,
                function<void(VectorXd&, VectorXd&)> eval_res,

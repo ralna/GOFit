@@ -1,5 +1,5 @@
 /*
- * Latin Hypercube Sampling. See:
+ * Tests for Latin Hypercube Sampling. See:
  *
  * McKay, M. D., Beckman, R. J., & Conover, W. J. (2000).
  * A comparison of three methods for selecting values of input variables
@@ -9,8 +9,6 @@
  * Copyright (C) 2022 The Science and Technology Facilities Council (STFC)
  * Author: Jaroslav Fowkes (STFC)
  */
-
-// Includes
 #include <iostream>
 
 #include "lhs.h"

@@ -22,7 +22,7 @@ using std::printf;
 using std::min;
 using std::max;
 
-// Function prototypes
+// function prototypes
 void reg(Control &control, MatrixXd&, VectorXd&, double&, VectorXd&);
 void reg_update(Control &control, VectorXd&, double, VectorXd&, double, MatrixXd&, VectorXd&, double&);
 

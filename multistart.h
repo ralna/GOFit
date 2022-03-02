@@ -55,7 +55,7 @@
  *  x - candidate global minimum
  *
  *  return value - 0 (converged) or 1 (iterations exceeded)
-*/
+ */
 int multistart(Control &control, Inform &inform, int samples, int m, int n, double eps_r,
                Eigen::VectorXd &xl, Eigen::VectorXd &xu, Eigen::VectorXd &x,
                std::function<void(Eigen::VectorXd&, Eigen::VectorXd&)> eval_res,
