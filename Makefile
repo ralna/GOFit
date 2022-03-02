@@ -18,10 +18,12 @@ CXXFLAGS = -Wall -g -std=c++17 -fopenmp
 INC = -I/usr/local/include/eigen3
 
 # What to build
-all: test_lhs test_regularisation test_multistart
+all: test_lhs test_numdiff test_regularisation test_multistart
 
 # These rules build the packages
 test_lhs: test_lhs.o lhs.o
+	$(CXX) $(CXXFLAGS) $(INC) -o $@ $^
+test_numdiff: test_numdiff.o numdiff.o
 	$(CXX) $(CXXFLAGS) $(INC) -o $@ $^
 test_regularisation: test_regularisation.o regularisation.o
 	$(CXX) $(CXXFLAGS) $(INC) -o $@ $^
@@ -36,5 +38,6 @@ test_multistart: test_multistart.o lhs.o regularisation.o multistart.o
 clean:
 	rm -f *.o
 	rm -f test_lhs
+	rm -f test_numdiff
 	rm -f test_regularisation
 	rm -f test_multistart
