@@ -24,12 +24,12 @@ using Eigen::VectorXd;
  */
 
 // Residual
-void eval_res(Eigen::VectorXd &x, Eigen::VectorXd &res){
+void eval_res(const Eigen::VectorXd &x, Eigen::VectorXd &res){
     res(0) = pow(1-x(0),2);
     res(1) = 100*pow(x(1)-pow(x(0),2),2);
 }
 // Jacobian
-void eval_jac(Eigen::VectorXd &x, Eigen::MatrixXd &jac){
+void eval_jac(const Eigen::VectorXd &x, Eigen::MatrixXd &jac){
     jac(0,0) = 2*(1-x(0))*(-1);
     jac(0,1) = 0;
     jac(1,0) = 200*(x(1)-pow(x(0),2))*(-2*x(0));

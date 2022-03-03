@@ -25,7 +25,7 @@
  *
  *  eval_res - function that evaluates the residual, must have the signature:
  *
- *     void eval_res(Eigen::VectorXd &x, Eigen::VectorXd &res)
+ *     void eval_res(const Eigen::VectorXd &x, Eigen::VectorXd &res)
  *
  *   The value of the residual evaluated at x must be assigned to res.
  *
@@ -34,8 +34,8 @@
  *  jac - forward finite difference approximation to the Jacobian at x
  *
  */
-void forward_difference_jac(int m, int n, Eigen::VectorXd &x,
-                            std::function<void(Eigen::VectorXd&, Eigen::VectorXd&)> eval_res,
+void forward_difference_jac(int m, int n, const Eigen::VectorXd &x,
+                            std::function<void(const Eigen::VectorXd&, Eigen::VectorXd&)> eval_res,
                             Eigen::MatrixXd &jac);
 
 /*
@@ -51,7 +51,7 @@ void forward_difference_jac(int m, int n, Eigen::VectorXd &x,
  *
  *  eval_res - function that evaluates the residual, must have the signature:
  *
- *     void eval_res(Eigen::VectorXd &x, Eigen::VectorXd &res)
+ *     void eval_res(const Eigen::VectorXd &x, Eigen::VectorXd &res)
  *
  *   The value of the residual evaluated at x must be assigned to res.
  *
@@ -60,8 +60,8 @@ void forward_difference_jac(int m, int n, Eigen::VectorXd &x,
  *  jac - central finite difference approximation to the Jacobian at x
  *
  */
-void central_difference_jac(int m, int n, Eigen::VectorXd &x,
-                            std::function<void(Eigen::VectorXd&, Eigen::VectorXd&)> eval_res,
+void central_difference_jac(int m, int n, const Eigen::VectorXd &x,
+                            std::function<void(const Eigen::VectorXd&, Eigen::VectorXd&)> eval_res,
                             Eigen::MatrixXd &jac);
 
 /*
@@ -81,6 +81,6 @@ void central_difference_jac(int m, int n, Eigen::VectorXd &x,
  *  abs_eps - absolute step size
  *
  */
-void compute_abs_eps(double rel_eps, Eigen::VectorXd &x, Eigen::VectorXd &abs_eps);
+void compute_abs_eps(double rel_eps, const Eigen::VectorXd &x, Eigen::VectorXd &abs_eps);
 
 #endif

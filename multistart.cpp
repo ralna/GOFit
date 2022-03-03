@@ -46,13 +46,13 @@ using std::function;
  *
  *  eval_res - function that evaluates the residual, must have the signature:
  *
- *     void eval_res(Eigen::VectorXd &x, Eigen::VectorXd &res)
+ *     void eval_res(const Eigen::VectorXd &x, Eigen::VectorXd &res)
  *
  *   The value of the residual evaluated at x must be assigned to res.
  *
  *  eval_jac - function that evaluates the Jacobian, must have the signature:
  *
- *     void eval_jac(Eigen::VectorXd &x, Eigen::MatrixXd &jac)
+ *     void eval_jac(const Eigen::VectorXd &x, Eigen::MatrixXd &jac)
  *
  *   The Jacobian of the residual evaluated at x must be assigned to jac.
  *
@@ -62,10 +62,10 @@ using std::function;
  *
  *  return value - 0 (converged) or 1 (iterations exceeded)
  */
-int multistart(Control &control, Inform &inform, int samples, int m, int n, double eps_r,
-               VectorXd &xl, VectorXd &xu, VectorXd &x,
-               function<void(VectorXd&, VectorXd&)> eval_res,
-               function<void(VectorXd&, MatrixXd&)> eval_jac){
+int multistart(const Control &control, Inform &inform, int samples, int m, int n, double eps_r,
+               const VectorXd &xl, const VectorXd &xu, VectorXd &x,
+               function<void(const VectorXd&, VectorXd&)> eval_res,
+               function<void(const VectorXd&, MatrixXd&)> eval_jac){
 
     // Initial variables
     double best_fmin = std::numeric_limits<double>::max();

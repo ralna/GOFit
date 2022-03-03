@@ -76,7 +76,7 @@ void lhsdesign(int s, int n, MatrixXd &lhd){
  *  lhd - latin hypercube design on [a,b]^n
  *
  */
-void lhsdesign(int s, int n, VectorXd &a, VectorXd &b, MatrixXd &lhd){
+void lhsdesign(int s, int n, const VectorXd &a, const VectorXd &b, MatrixXd &lhd){
 
     // Generate latin hypercube design on [0,1]^n
     lhsdesign(s,n,lhd);

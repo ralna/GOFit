@@ -32,7 +32,7 @@ using std::function;
  *
  *  eval_res - function that evaluates the residual, must have the signature:
  *
- *     void eval_res(Eigen::VectorXd &x, Eigen::VectorXd &res)
+ *     void eval_res(const Eigen::VectorXd &x, Eigen::VectorXd &res)
  *
  *   The value of the residual evaluated at x must be assigned to res.
  *
@@ -41,8 +41,8 @@ using std::function;
  *  jac - forward finite difference approximation to the Jacobian at x
  *
  */
-void forward_difference_jac(int m, int n, VectorXd &x,
-                            function<void(VectorXd&, VectorXd&)> eval_res,
+void forward_difference_jac(int m, int n, const VectorXd &x,
+                            function<void(const VectorXd&, VectorXd&)> eval_res,
                             MatrixXd &jac){
 
     // optimal relative step size is sqrt of machine precision
@@ -85,7 +85,7 @@ void forward_difference_jac(int m, int n, VectorXd &x,
  *
  *  eval_res - function that evaluates the residual, must have the signature:
  *
- *     void eval_res(Eigen::VectorXd &x, Eigen::VectorXd &res)
+ *     void eval_res(const Eigen::VectorXd &x, Eigen::VectorXd &res)
  *
  *   The value of the residual evaluated at x must be assigned to res.
  *
@@ -94,8 +94,8 @@ void forward_difference_jac(int m, int n, VectorXd &x,
  *  jac - central finite difference approximation to the Jacobian at x
  *
  */
-void central_difference_jac(int m, int n, VectorXd &x,
-                            function<void(VectorXd&, VectorXd&)> eval_res,
+void central_difference_jac(int m, int n, const VectorXd &x,
+                            function<void(const VectorXd&, VectorXd&)> eval_res,
                             MatrixXd &jac){
 
     // optimal relative step size is cbrt of machine precision
@@ -144,7 +144,7 @@ void central_difference_jac(int m, int n, VectorXd &x,
  *  abs_eps - absolute step size
  *
  */
-void compute_abs_eps(double rel_eps, VectorXd &x, VectorXd &abs_eps){
+void compute_abs_eps(double rel_eps, const VectorXd &x, VectorXd &abs_eps){
 
     // compute sign of x
     VectorXd sign_x = x.cwiseSign();

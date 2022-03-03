@@ -23,8 +23,8 @@ using std::min;
 using std::max;
 
 // function prototypes
-void reg(Control &control, MatrixXd&, VectorXd&, double&, VectorXd&);
-void reg_update(Control &control, VectorXd&, double, VectorXd&, double, MatrixXd&, VectorXd&, double&);
+void reg(const Control &control, const MatrixXd&, const VectorXd&, double&, VectorXd&);
+void reg_update(const Control &control, VectorXd&, double, const VectorXd&, double, const MatrixXd&, const VectorXd&, double&);
 
 /*
  * An implementation of adpative quadratic regularisation.
@@ -49,13 +49,13 @@ void reg_update(Control &control, VectorXd&, double, VectorXd&, double, MatrixXd
  *
  *  eval_res - function that evaluates the residual, must have the signature:
  *
- *     void eval_res(Eigen::VectorXd &x, Eigen::VectorXd &res)
+ *     void eval_res(const Eigen::VectorXd &x, Eigen::VectorXd &res)
  *
  *   The value of the residual evaluated at x must be assigned to res.
  *
  *  eval_jac - function that evaluates the Jacobian, must have the signature:
  *
- *     void eval_jac(Eigen::VectorXd &x, Eigen::MatrixXd &jac)
+ *     void eval_jac(const Eigen::VectorXd &x, Eigen::MatrixXd &jac)
  *
  *   The Jacobian of the residual evaluated at x must be assigned to jac.
  *
@@ -65,9 +65,9 @@ void reg_update(Control &control, VectorXd&, double, VectorXd&, double, MatrixXd
  *
  *  return value - 0 (converged) or 1 (iterations exceeded)
  */
-int regularisation(Control &control, Inform &inform, int m, int n, VectorXd &x,
-                   function<void(VectorXd&, VectorXd&)> eval_res,
-                   function<void(VectorXd&, MatrixXd&)> eval_jac){
+int regularisation(const Control &control, Inform &inform, int m, int n, VectorXd &x,
+                   function<void(const VectorXd&, VectorXd&)> eval_res,
+                   function<void(const VectorXd&, MatrixXd&)> eval_jac){
 
     // Initialisation
     int k = 0;     // iteration counter
@@ -147,7 +147,7 @@ int regularisation(Control &control, Inform &inform, int m, int n, VectorXd &x,
  *  sigma - updated regularisation parameter
  *
  */
-void reg_update(Control &control, VectorXd &x, double fx, VectorXd &s, double fxs, MatrixXd &J, VectorXd &gradf, double &sigma){
+void reg_update(const Control &control, VectorXd &x, double fx, const VectorXd &s, double fxs, const MatrixXd &J, const VectorXd &gradf, double &sigma){
 
     // Evaluate sufficient decrease
     double Delta_m = -gradf.dot(s) -0.5*(J*s).squaredNorm();
@@ -186,7 +186,7 @@ void reg_update(Control &control, VectorXd &x, double fx, VectorXd &s, double fx
  *  sigma - regularisation parameter (maybe modified)
  *
  */
-void reg(Control &control, MatrixXd &J, VectorXd &gradf, double &sigma, VectorXd &s){
+void reg(const Control &control, const MatrixXd &J, const VectorXd &gradf, double &sigma, VectorXd &s){
 
     // Size of Jacobian
     int m = J.rows();

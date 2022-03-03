@@ -15,14 +15,14 @@
  */
 
 // Residual
-void eval_res(Eigen::VectorXd &x, Eigen::VectorXd &res){
+void eval_res(const Eigen::VectorXd &x, Eigen::VectorXd &res){
     Eigen::VectorXd y = 1 + (x.array() - 1)/4;
     res(0) = sin(M_PI*y(0));
     res(1) = (y(0)-1)*sqrt(1+10*pow(sin(M_PI*y(1)),2));
     res(2) = y(1)-1;
 }
 // Jacobian
-void eval_jac(Eigen::VectorXd &x, Eigen::MatrixXd &jac){
+void eval_jac(const Eigen::VectorXd &x, Eigen::MatrixXd &jac){
     Eigen::VectorXd y = 1 + (x.array() - 1)/4;
     double dydx = 0.25;
     jac(0,0) = dydx*M_PI*cos(M_PI*y(0));

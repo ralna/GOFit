@@ -70,13 +70,13 @@ struct Inform{
  *
  *  eval_res - function that evaluates the residual, must have the signature:
  *
- *     void eval_res(Eigen::VectorXd &x, Eigen::VectorXd &res)
+ *     void eval_res(const Eigen::VectorXd &x, Eigen::VectorXd &res)
  *
  *   The value of the residual evaluated at x must be assigned to res.
  *
  *  eval_jac - function that evaluates the Jacobian, must have the signature:
  *
- *     void eval_jac(Eigen::VectorXd &x, Eigen::MatrixXd &jac)
+ *     void eval_jac(const Eigen::VectorXd &x, Eigen::MatrixXd &jac)
  *
  *   The Jacobian of the residual evaluated at x must be assigned to jac.
  *
@@ -86,8 +86,8 @@ struct Inform{
  *
  *  return value - 0 (converged) or 1 (iterations exceeded)
  */
-int regularisation(Control &control, Inform &inform, int m, int n, Eigen::VectorXd &x,
-                   std::function<void(Eigen::VectorXd&, Eigen::VectorXd&)> eval_res,
-                   std::function<void(Eigen::VectorXd&, Eigen::MatrixXd&)> eval_jac);
+int regularisation(const Control &control, Inform &inform, int m, int n, Eigen::VectorXd &x,
+                   std::function<void(const Eigen::VectorXd&, Eigen::VectorXd&)> eval_res,
+                   std::function<void(const Eigen::VectorXd&, Eigen::MatrixXd&)> eval_jac);
 
 #endif

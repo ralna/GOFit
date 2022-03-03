@@ -44,6 +44,7 @@ void lhsdesign(int s, int n, Eigen::MatrixXd &lhd);
  *  lhd - latin hypercube design on [a,b]^n
  *
  */
-void lhsdesign(int s, int n, Eigen::VectorXd &a, Eigen::VectorXd &b, Eigen::MatrixXd &lhd);
+void lhsdesign(int s, int n, const Eigen::VectorXd &a, const Eigen::VectorXd &b,
+               Eigen::MatrixXd &lhd);
 
 #endif
