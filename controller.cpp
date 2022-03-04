@@ -58,9 +58,8 @@ using std::function;
 int controller(int m, int n, int split_point, const VectorXd &x0,
                const VectorXd &xl, const VectorXd &xu,
                function<void(const VectorXd&, VectorXd&)> eval_res,
-               int samples=100, int maxit=200,
-               double eps_r=1e-5, double eps_g=1e-4, double eps_s=1e-8,
-               VectorXd &x){
+               VectorXd &x, int samples /*=100*/, int maxit /*=200*/,
+               double eps_r /*=1e-5*/, double eps_g /*=1e-4*/, double eps_s /*=1e-8*/){
 
     // Control
     Control control;
@@ -101,7 +100,7 @@ int controller(int m, int n, int split_point, const VectorXd &x0,
     };
 
     // Stage 1: Fix initial shape params, optimize model parameters using multistart
-    status = multistart(control,inform,samples,m,n1,eps_r,y1l,y1u,y1,eval_res1,eval_jac1);
+    status = multistart(control,inform,samples,m,n1,eps_r,y1l,y1u,y1,eval_res1,eval_jac1,false);
 
     // Stage 2: Fix optimized model parameters, optimize shape params from initial guess
     auto eval_res2 = [&y1,&xl,&xu,&eval_res,n1,n2] (const VectorXd &y2, VectorXd &res2){

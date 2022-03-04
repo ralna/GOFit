@@ -11,7 +11,7 @@
  */
 #include <iostream>
 
-#include "lhs.h"
+#include "../lhs.h"
 
 // method aliases
 using std::cout;

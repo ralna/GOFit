@@ -11,7 +11,7 @@
 #include <iostream>
 
 // Includes
-#include "numdiff.h"
+#include "../numdiff.h"
 
 // method aliases
 using std::cout;

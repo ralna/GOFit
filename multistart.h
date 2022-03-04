@@ -59,6 +59,7 @@
 int multistart(const Control &control, Inform &inform, int samples, int m, int n, double eps_r,
                const Eigen::VectorXd &xl, const Eigen::VectorXd &xu, Eigen::VectorXd &x,
                std::function<void(const Eigen::VectorXd&, Eigen::VectorXd&)> eval_res,
-               std::function<void(const Eigen::VectorXd&, Eigen::MatrixXd&)> eval_jac);
+               std::function<void(const Eigen::VectorXd&, Eigen::MatrixXd&)> eval_jac,
+               bool disp = true);
 
 #endif

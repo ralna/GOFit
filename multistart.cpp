@@ -65,7 +65,8 @@ using std::function;
 int multistart(const Control &control, Inform &inform, int samples, int m, int n, double eps_r,
                const VectorXd &xl, const VectorXd &xu, VectorXd &x,
                function<void(const VectorXd&, VectorXd&)> eval_res,
-               function<void(const VectorXd&, MatrixXd&)> eval_jac){
+               function<void(const VectorXd&, MatrixXd&)> eval_jac,
+               bool disp /*= true*/){
 
     // Initial variables
     double best_fmin = std::numeric_limits<double>::max();
@@ -120,15 +121,17 @@ int multistart(const Control &control, Inform &inform, int samples, int m, int n
 
     }
 
-    if(best_sigma == control.SIGMA_MAX){ // hit SIGMA_MAX
-        printf("Warning: More regularisation was required but was unsuccessful. May have failed to converge to global minimum.\n");
-    }else if(best_sigma == control.SIGMA_MIN){ // hit SIGMA_MIN
-        printf("Warning: May have failed to converge to global minimum.\n");
-    }
+    if(disp){
+        if(best_sigma == control.SIGMA_MAX){ // hit SIGMA_MAX
+            printf("Warning: More regularisation was required but was unsuccessful. May have failed to converge to global minimum.\n");
+        }else if(best_sigma == control.SIGMA_MIN){ // hit SIGMA_MIN
+            printf("Warning: May have failed to converge to global minimum.\n");
+        }
 
-    printf("Global minimum at %.6f found in %i iterations on run number %i.\n", best_fmin, best_iter, best_run+1);
-    printf("Global minimiser:\n");
-    for(int i = 0; i < n; i++) printf("%.8f\n", x(i));
+        printf("Global minimum at %.6f found in %i iterations on run number %i.\n", best_fmin, best_iter, best_run+1);
+        printf("Global minimiser:\n");
+        for(int i = 0; i < n; i++) printf("%.8f\n", x(i));
+    }
 
     return best_status;
 }

@@ -11,7 +11,7 @@
  */
 #include <cmath>
 
-#include "regularisation.h"
+#include "../regularisation.h"
 
 /*
  * Rosenbrock Test Function

@@ -8,7 +8,7 @@
  */
 #include <cmath>
 
-#include "multistart.h"
+#include "../multistart.h"
 
 /*
  * Levy and Gomez Test Function

@@ -50,11 +50,10 @@
  *
  *  return value - 0 (converged) or 1 (iterations exceeded)
  */
-int controller(int m, int n, int split_point, const VectorXd &x0,
-               const VectorXd &xl, const VectorXd &xu,
-               function<void(const VectorXd&, VectorXd&)> eval_res,
-               int samples=100, int maxit=200,
-               double eps_r=1e-5, double eps_g=1e-4, double eps_s=1e-8,
-               VectorXd &x);
+int controller(int m, int n, int split_point, const Eigen::VectorXd &x0,
+               const Eigen::VectorXd &xl, const Eigen::VectorXd &xu,
+               std::function<void(const Eigen::VectorXd&, Eigen::VectorXd&)> eval_res,
+               Eigen::VectorXd &x, int samples=100, int maxit=200,
+               double eps_r=1e-5, double eps_g=1e-4, double eps_s=1e-8);
 
 #endif
