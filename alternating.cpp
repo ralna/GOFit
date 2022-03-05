@@ -1,5 +1,5 @@
 /*
- * Controller for multistart adpative quadratic regularisation. See:
+ * Alternating multistart adpative quadratic regularisation. See:
  *
  * CITE TECH REPORT
  *
@@ -8,7 +8,7 @@
  */
 
 // Includes
-#include "controller.h"
+#include "alternating.h"
 #include "numdiff.h"
 
 // method aliases
@@ -17,7 +17,7 @@ using Eigen::VectorXd;
 using std::function;
 
 /*
- * Controller for multistart adpative quadratic regularisation.
+ * Alternating multistart adpative quadratic regularisation.
  *
  * Inputs:
  *
@@ -25,7 +25,7 @@ using std::function;
  *
  *  n - number of parameters (dimension of the problem)
  *
- *  split_point - parameter split point for alternating optimization
+ *  n_split - parameter split point for alternating optimization (<n)
  *
  *  x0 - initial guess parameters
  *
@@ -38,6 +38,8 @@ using std::function;
  *     void eval_res(const Eigen::VectorXd &x, Eigen::VectorXd &res)
  *
  *   The value of the residual evaluated at x must be assigned to res.
+ *
+ * Optional Inputs:
  *
  *  samples - number of Latin Hypercube initial points
  *
@@ -55,11 +57,11 @@ using std::function;
  *
  *  return value - 0 (converged) or 1 (iterations exceeded)
  */
-int controller(int m, int n, int split_point, const VectorXd &x0,
-               const VectorXd &xl, const VectorXd &xu,
-               function<void(const VectorXd&, VectorXd&)> eval_res,
-               VectorXd &x, int samples /*=100*/, int maxit /*=200*/,
-               double eps_r /*=1e-5*/, double eps_g /*=1e-4*/, double eps_s /*=1e-8*/){
+int alternating(int m, int n, int n_split, const VectorXd &x0,
+                const VectorXd &xl, const VectorXd &xu,
+                function<void(const VectorXd&, VectorXd&)> eval_res,
+                VectorXd &x, int samples /*=100*/, int maxit /*=200*/,
+                double eps_r /*=1e-5*/, double eps_g /*=1e-4*/, double eps_s /*=1e-8*/){
 
     // Control
     Control control;
@@ -72,8 +74,8 @@ int controller(int m, int n, int split_point, const VectorXd &x0,
     int status;
 
     // length of parameter blocks for alternating optimization
-    int n1 = split_point;   // all model parameters
-    int n2 = n-split_point; // all shape parameters
+    int n1 = n_split;   // all model parameters
+    int n2 = n-n_split; // all shape parameters
 
     // scaled alternating optimization outputs
     VectorXd y1(n1), y2(n2);

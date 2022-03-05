@@ -1,5 +1,5 @@
 /*
- * Tests for controller for multistart adpative quadratic regularisation. See:
+ * Tests for alternating multistart adpative quadratic regularisation. See:
  *
  * CITE TECH REPORT
  *
@@ -8,7 +8,7 @@
  */
 #include <iostream>
 
-#include "../controller.h"
+#include "../alternating.h"
 
 // method aliases
 using std::cout;
@@ -34,7 +34,7 @@ void eval_res(const VectorXd &x, VectorXd &res){
  */
 int main(){
 
-    cout << "=+= Controller Test =+=" << endl;
+    cout << "=+= Alternating Optimization Test =+=" << endl;
 
     // Problem data
     int m = 5;
@@ -50,7 +50,7 @@ int main(){
     int maxit = 200;
 
     // Run on test function
-    int status = controller(m, n, split_point, x0, xl, xu, eval_res, x, samples, maxit);
+    int status = alternating(m, n, split_point, x0, xl, xu, eval_res, x, samples, maxit);
 
     // Evaluate objective at minimiser
     VectorXd rx(m); // residual
