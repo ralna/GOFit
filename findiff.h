@@ -6,8 +6,8 @@
  * Copyright (C) 2022 The Science and Technology Facilities Council (STFC)
  * Author: Jaroslav Fowkes (STFC)
  */
-#ifndef NUMDIFF_H
-#define NUMDIFF_H
+#ifndef GLOBFIT_FINDIFF_H
+#define GLOBFIT_FINDIFF_H
 
 #include <functional>
 #include <Eigen/Core>

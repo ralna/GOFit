@@ -9,7 +9,7 @@
 #include <cmath>
 
 // Includes
-#include "numdiff.h"
+#include "findiff.h"
 
 // method aliases
 using Eigen::MatrixXd;

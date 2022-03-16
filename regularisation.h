@@ -9,8 +9,8 @@
  * Copyright (C) 2022 The Science and Technology Facilities Council (STFC)
  * Author: Jaroslav Fowkes (STFC)
  */
-#ifndef REGULARISATION_H
-#define REGULARISATION_H
+#ifndef GLOBFIT_REGULARISATION_H
+#define GLOBFIT_REGULARISATION_H
 
 #include <functional>
 #include <Eigen/Core>

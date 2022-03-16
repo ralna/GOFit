@@ -6,8 +6,8 @@
  * Copyright (C) 2022 The Science and Technology Facilities Council (STFC)
  * Author: Jaroslav Fowkes (STFC) from the Python code by Megan O'Flynn (STFC)
  */
-#ifndef ALTERNATING_H
-#define ALTERNATING_H
+#ifndef GLOBFIT_ALTERNATING_H
+#define GLOBFIT_ALTERNATING_H
 
 #include "multistart.h"
 

@@ -9,7 +9,7 @@
 
 // Includes
 #include "alternating.h"
-#include "numdiff.h"
+#include "findiff.h"
 
 // method aliases
 using Eigen::MatrixXd;

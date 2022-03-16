@@ -10,20 +10,22 @@ CXXFLAGS = -Wall -g -std=c++17 -fopenmp
 #CXXFLAGS = -Wall -g -std=c++17 -qopenmp
 ############################
 INC = -I/usr/local/include/eigen3
+#INC = -I/usr/include/eigen3
+#INC = -I/home/fowkes/Code/eigen3
 
 # What to build
-all: test_lhs test_numdiff test_regularisation test_multistart test_alternating
+all: test_lhs test_findiff test_regularisation test_multistart test_alternating
 
 # These rules build the packages
 test_lhs: test_lhs.o lhs.o
 	$(CXX) $(CXXFLAGS) $(INC) -o $@ $^
-test_numdiff: test_numdiff.o numdiff.o
+test_findiff: test_findiff.o findiff.o
 	$(CXX) $(CXXFLAGS) $(INC) -o $@ $^
 test_regularisation: test_regularisation.o regularisation.o
 	$(CXX) $(CXXFLAGS) $(INC) -o $@ $^
 test_multistart: test_multistart.o lhs.o regularisation.o multistart.o
 	$(CXX) $(CXXFLAGS) $(INC) -o $@ $^
-test_alternating: test_alternating.o lhs.o regularisation.o multistart.o numdiff.o alternating.o
+test_alternating: test_alternating.o lhs.o regularisation.o multistart.o findiff.o alternating.o
 	$(CXX) $(CXXFLAGS) $(INC) -o $@ $^
 
 # The following rules build a source file from a variable
@@ -36,7 +38,7 @@ test_alternating: test_alternating.o lhs.o regularisation.o multistart.o numdiff
 clean:
 	rm -f *.o
 	rm -f test_lhs
-	rm -f test_numdiff
+	rm -f test_findiff
 	rm -f test_regularisation
 	rm -f test_multistart
 	rm -f test_alternating

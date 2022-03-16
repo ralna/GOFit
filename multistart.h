@@ -6,8 +6,8 @@
  * Copyright (C) 2022 The Science and Technology Facilities Council (STFC)
  * Author: Jaroslav Fowkes (STFC) from the Python code by Megan O'Flynn (STFC)
  */
-#ifndef MULTISTART_H
-#define MULTISTART_H
+#ifndef GLOBFIT_MULTISTART_H
+#define GLOBFIT_MULTISTART_H
 
 #include "regularisation.h"
 
