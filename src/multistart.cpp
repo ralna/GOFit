@@ -11,6 +11,7 @@
 
 // Includes
 #include "multistart.h"
+#include "findiff.h"
 #include "lhs.h"
 
 // method aliases
@@ -18,6 +19,66 @@ using Eigen::MatrixXd;
 using Eigen::VectorXd;
 using Eigen::all;
 using std::function;
+
+/*
+ * Multistart adpative quadratic regularisation (Simple Interface)
+ *
+ * Inputs:
+ *
+ *  m - number of residuals (number of data points)
+ *
+ *  n - number of parameters (dimension of the problem)
+ *
+ *  xl - lower bounds of the parameters to optimize
+ *
+ *  xu - upper bounds of the parameters to optimize
+ *
+ *  eval_res - function that evaluates the residual, must have the signature:
+ *
+ *     void eval_res(const Eigen::VectorXd &x, Eigen::VectorXd &res)
+ *
+ *   The value of the residual evaluated at x must be assigned to res.
+ *
+ * Optional Inputs:
+ *
+ *  samples - number of Latin Hypercube initial points
+ *
+ *  maxit - maximum iterations
+ *
+ *  eps_r - residual tolerance
+ *
+ *  eps_g - gradient stopping tolerance
+ *
+ *  eps_s - step stopping tolerance
+ *
+ * Outputs:
+ *
+ *  x - minimal point
+ *
+ *  return value - 0 (converged) or 1 (iterations exceeded)
+ */
+int multistart_simple(int m, int n, const VectorXd &xl, const VectorXd &xu,
+                      function<void(const VectorXd&, VectorXd&)> eval_res,
+                      VectorXd &x, int samples /*=100*/, int maxit /*=200*/,
+                      double eps_r /*=1e-5*/, double eps_g /*=1e-4*/, double eps_s /*=1e-8*/){
+
+    // Set control parameters
+    Control control;
+    control.maxit = maxit;
+    control.eps_g = eps_g;
+    control.eps_s = eps_s;
+
+    // Forward finite-difference Jacobian
+    auto eval_jac = [&eval_res,m,n] (const VectorXd &x, MatrixXd &jac){
+        forward_difference_jac(m,n,x,eval_res,jac);
+    };
+
+    Inform inform;
+    int status = multistart(control, inform, samples, m, n, eps_r, xl, xu, x, eval_res, eval_jac, false);
+
+    return status;
+}
+
 
 /*
  * Multistart adpative quadratic regularisation

@@ -46,6 +46,23 @@ tuple<VectorXd, int> py_alternating(int m, int n, int n_split, const VectorXd &x
     return {x, status};
 }
 
+// Python multistart function that returns x and status
+tuple<VectorXd, int> py_multistart(int m, int n, const VectorXd &xl, const VectorXd &xu,
+                                   function<VectorXd(const VectorXd&)> py_eval_res,
+                                   int samples, int maxit, double eps_r, double eps_g, double eps_s){
+
+    // Wrap Python eval_res to C++ signature that we support
+    auto eval_res = [&py_eval_res] (const VectorXd &x, VectorXd &res){ res = py_eval_res(x); };
+
+    // Call C++ multistart function
+    VectorXd x(n);
+    int status = multistart_simple(m, n, xl, xu, eval_res, x, samples, maxit, eps_r, eps_g, eps_s);
+
+    // Return minimizer and status to Python
+    return {x, status};
+}
+
+
 // Main python module
 PYBIND11_MODULE(gofit, m) {
 
@@ -65,7 +82,7 @@ PYBIND11_MODULE(gofit, m) {
           py::arg("eval_res"),
           py::pos_only(),
 
-          // keyword-only arguments
+          // keyword-only arguments with defaults
           py::kw_only(),
           py::arg("samples") = 100,
           py::arg("maxit") = 200,
@@ -74,7 +91,31 @@ PYBIND11_MODULE(gofit, m) {
           py::arg("eps_s") = 1e-8,
 
           // function docstring
-          "Alternating multistart adpative quadratic regularisation");
+          "Alternating multistart adpative quadratic regularisation"
+    );
+
+    // multistart function definition
+    m.def("multistart", &py_multistart,
+
+          // position-only arguments
+          py::arg("m"),
+          py::arg("n"),
+          py::arg("xl"),
+          py::arg("xu"),
+          py::arg("eval_res"),
+          py::pos_only(),
+
+          // keyword-only arguments with defaults
+          py::kw_only(),
+          py::arg("samples") = 100,
+          py::arg("maxit") = 200,
+          py::arg("eps_r") = 1e-5,
+          py::arg("eps_g") = 1e-4,
+          py::arg("eps_s") = 1e-8,
+
+          // function docstring
+          "Multistart adpative quadratic regularisation"
+    );
 
     // get version number from setup.py
     #ifdef VERSION_INFO
