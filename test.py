@@ -1,9 +1,9 @@
-from globfit import alternating
+from gofit import alternating
 import numpy as np
 
 # Levy and Gomez combined with Rosenbrock Test Function
-def eval_res(x,m):
-    res = np.zeros(m)
+def eval_res(x):
+    res = np.zeros(5)
 
     y = 1 + (x - 1)/4
     res[0] = np.sin(np.pi*y[0])

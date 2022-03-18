@@ -1,7 +1,9 @@
 /*
  * Python Interface for Alternating multistart adpative quadratic regularisation. See:
  *
- * CITE TECH REPORT
+ * O’Flynn, M., Fowkes, J., & Gould, N. (2022).
+ * Global optimization of crystal field parameter fitting in Mantid.
+ * RAL Technical Reports, RAL-TR-2022-002.
  *
  * Copyright (C) 2022 The Science and Technology Facilities Council (STFC)
  * Author: Jaroslav Fowkes (STFC)
@@ -27,38 +29,41 @@ using Eigen::VectorXd;
 using std::function;
 using std::tuple;
 
-// Wrap alternating function to return x and status in python
-tuple<VectorXd, int> wrap_alternating(int m, int n, int n_split, const VectorXd &x0,
+// Python alternating function that returns x and status
+tuple<VectorXd, int> py_alternating(int m, int n, int n_split, const VectorXd &x0,
                                       const VectorXd &xl, const VectorXd &xu,
-                                      function<VectorXd(const VectorXd&, int)> eval_res,
+                                      function<VectorXd(const VectorXd&)> py_eval_res,
                                       int samples, int maxit, double eps_r, double eps_g, double eps_s){
 
-    // Wrap python eval_res to signature that we support
-    auto wrap_eval_res = [&eval_res,m] (const VectorXd &x, VectorXd &res){ res = eval_res(x,m); };
+    // Wrap Python eval_res to C++ signature that we support
+    auto eval_res = [&py_eval_res] (const VectorXd &x, VectorXd &res){ res = py_eval_res(x); };
 
+    // Call C++ alternating function
     VectorXd x(n);
-    int status = alternating(m, n, n_split, x0, xl, xu, wrap_eval_res, x, samples, maxit, eps_r, eps_g, eps_s);
+    int status = alternating(m, n, n_split, x0, xl, xu, eval_res, x, samples, maxit, eps_r, eps_g, eps_s);
 
+    // Return minimizer and status to Python
     return {x, status};
 }
 
 // Main python module
-PYBIND11_MODULE(globfit, m) {
+PYBIND11_MODULE(gofit, m) {
 
     // module docstring
-    m.doc() = "GlobFit: Global optimization for Fitting problems";
+    m.doc() = "GOFit: Global Optimization for Fitting problems";
 
     // alternating function definition
-    m.def("alternating", &wrap_alternating,
+    m.def("alternating", &py_alternating,
 
           // position-only arguments
-          py::arg("m"), py::pos_only(),
-          py::arg("n"), py::pos_only(),
-          py::arg("n_split"), py::pos_only(),
-          py::arg("x0"), py::pos_only(),
-          py::arg("xl"), py::pos_only(),
-          py::arg("xu"), py::pos_only(),
-          py::arg("eval_res"), py::pos_only(),
+          py::arg("m"),
+          py::arg("n"),
+          py::arg("n_split"),
+          py::arg("x0"),
+          py::arg("xl"),
+          py::arg("xu"),
+          py::arg("eval_res"),
+          py::pos_only(),
 
           // keyword-only arguments
           py::kw_only(),

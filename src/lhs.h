@@ -9,8 +9,8 @@
  * Copyright (C) 2022 The Science and Technology Facilities Council (STFC)
  * Author: Jaroslav Fowkes (STFC)
  */
-#ifndef GLOBFIT_LHS_H
-#define GLOBFIT_LHS_H
+#ifndef GOFIT_LHS_H
+#define GOFIT_LHS_H
 
 #include <Eigen/Core>
 

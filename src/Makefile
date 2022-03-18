@@ -10,8 +10,8 @@ CXXFLAGS = -Wall -g -std=c++17 -fopenmp
 #CXXFLAGS = -Wall -g -std=c++17 -qopenmp
 ############################
 #INC = -I/usr/local/include/eigen3
-#INC = -I/usr/include/eigen3
-INC = -I/home/fowkes/Code/eigen3
+INC = -I/usr/include/eigen3
+#INC = -I/home/fowkes/Code/eigen3
 
 # What to build
 all: test_lhs test_findiff test_regularisation test_multistart test_alternating

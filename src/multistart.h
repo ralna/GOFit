@@ -1,13 +1,15 @@
 /*
  * Multistart adpative quadratic regularisation. See:
  *
- * CITE TECH REPORT
+ * O’Flynn, M., Fowkes, J., & Gould, N. (2022).
+ * Global optimization of crystal field parameter fitting in Mantid.
+ * RAL Technical Reports, RAL-TR-2022-002.
  *
  * Copyright (C) 2022 The Science and Technology Facilities Council (STFC)
  * Author: Jaroslav Fowkes (STFC) from the Python code by Megan O'Flynn (STFC)
  */
-#ifndef GLOBFIT_MULTISTART_H
-#define GLOBFIT_MULTISTART_H
+#ifndef GOFIT_MULTISTART_H
+#define GOFIT_MULTISTART_H
 
 #include "regularisation.h"
 

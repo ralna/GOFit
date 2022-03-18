@@ -11,23 +11,23 @@ __version__ = "0.0.1"
 
 # The main interface is through Pybind11Extension.
 ext_modules = [
-    Pybind11Extension("globfit",
+    Pybind11Extension("gofit",
         sorted(glob("src/*.cpp")),
         define_macros = [('VERSION_INFO', __version__)], # pass version to interface
-        include_dirs=["/home/fowkes/Code/eigen3"],
+        include_dirs=["/usr/include/eigen3"],
         cxx_std=17,
         ),
 ]
 
 setup(
-    name="globfit",
+    name="gofit",
     version=__version__,
-    description="GlobFit: Global optimization for Fitting problems",
+    description="GOFit: Global Optimization for Fitting problems",
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
     author="Jaroslav Fowkes",
     author_email="jaroslav.fowkes@stfc.ac.uk",
-    url="https://github.com/ralna/globfit",
+    url="https://github.com/ralna/gofit",
     license='New BSD',
     keywords = "mathematics optimization",
     classifiers=[

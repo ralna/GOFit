@@ -1,13 +1,15 @@
 /*
  * Finite difference approximations to the Jacobian. See:
  *
- * CITE PRACTICAL OPTIMIZATION
+ * Gill, P. E., Murray, W., & Wright, M. H. (2019).
+ * Practical Optimization. Chapter 8: Practicalities.
+ * Society for Industrial and Applied Mathematics.
  *
  * Copyright (C) 2022 The Science and Technology Facilities Council (STFC)
  * Author: Jaroslav Fowkes (STFC)
  */
-#ifndef GLOBFIT_FINDIFF_H
-#define GLOBFIT_FINDIFF_H
+#ifndef GOFIT_FINDIFF_H
+#define GOFIT_FINDIFF_H
 
 #include <functional>
 #include <Eigen/Core>
