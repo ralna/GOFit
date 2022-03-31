@@ -21,9 +21,9 @@ test_lhs: test_lhs.o lhs.o
 	$(CXX) $(CXXFLAGS) $(INC) -o $@ $^
 test_findiff: test_findiff.o findiff.o
 	$(CXX) $(CXXFLAGS) $(INC) -o $@ $^
-test_regularisation: test_regularisation.o regularisation.o
+test_regularisation: test_regularisation.o regularisation.o findiff.o
 	$(CXX) $(CXXFLAGS) $(INC) -o $@ $^
-test_multistart: test_multistart.o lhs.o regularisation.o multistart.o
+test_multistart: test_multistart.o lhs.o regularisation.o multistart.o findiff.o
 	$(CXX) $(CXXFLAGS) $(INC) -o $@ $^
 test_alternating: test_alternating.o lhs.o regularisation.o multistart.o findiff.o alternating.o
 	$(CXX) $(CXXFLAGS) $(INC) -o $@ $^

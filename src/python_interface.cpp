@@ -75,6 +75,34 @@ tuple<VectorXd, int> py_multistart(int m, int n, const VectorXd &xl, const Vecto
     return {x, status};
 }
 
+// Python regularisation function that returns x and status
+tuple<VectorXd, int> py_regularisation(int m, int n, VectorXd &x,
+                                       function<VectorXd(const VectorXd&)> py_eval_res,
+                                       function<MatrixXd(const VectorXd&)> py_eval_jac,
+                                       int maxit, double eps_g, double eps_s){
+
+    // Wrap Python eval_res to C++ signature that we support
+    auto eval_res = [&py_eval_res] (const VectorXd &x, VectorXd &res){ res = py_eval_res(x); };
+
+    int status;
+    if(py_eval_jac){ // If Python eval_jac given
+
+        // Wrap Python eval_jac to C++ signature that we support
+        auto eval_jac = [&py_eval_jac] (const VectorXd &x, MatrixXd &jac){ jac = py_eval_jac(x); };
+
+        // Call C++ regularisation function
+        status = regularisation(m, n, x, eval_res, eval_jac, maxit, eps_g, eps_s);
+
+    }else{ // Otherwise Python eval_jac not given
+
+        // Call C++ regularisation function with finite-difference Jacobian
+        status = regularisation(m, n, x, eval_res, maxit, eps_g, eps_s);
+    }
+
+    // Return minimizer and status to Python
+    return {x, status};
+}
+
 
 // Main python module
 PYBIND11_MODULE(gofit, m) {
@@ -129,6 +157,27 @@ PYBIND11_MODULE(gofit, m) {
 
           // function docstring
           "Multistart adaptive quadratic regularisation"
+    );
+
+    // regularisation function definition
+    m.def("regularisation", &py_regularisation,
+
+          // position-only arguments
+          py::arg("m"),
+          py::arg("n"),
+          py::arg("x"),
+          py::arg("eval_res"),
+          py::arg("eval_jac"),
+          py::pos_only(),
+
+          // keyword-only arguments with defaults
+          py::kw_only(),
+          py::arg("maxit") = 200,
+          py::arg("eps_g") = 1e-4,
+          py::arg("eps_s") = 1e-8,
+
+          // function docstring
+          "Adaptive quadratic regularisation"
     );
 
     // get version number from setup.py

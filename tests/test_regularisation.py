@@ -1,4 +1,4 @@
-from gofit import multistart
+from gofit import regularisation
 import numpy as np
 
 # Load data
@@ -24,15 +24,12 @@ def eval_jac(p):
 m = data.shape[0]
 n = 4
 p0 = np.array([8, 2.98, 4, 1.02])
-pl = np.array([2, 1, 0, -1])
-pu = np.array([10, 5, 5, 3])
 
 # Parameters
-samples = 100
 maxit = 200
 
 # run alternating multistart quadratic regularisation
-p, status = multistart(m,n,pl,pu,eval_res,eval_jac,samples=samples,maxit=maxit)
+p, status = regularisation(m,n,p0,eval_res,eval_jac,maxit=maxit)
 
 print("Status:")
 print(status)
@@ -40,7 +37,7 @@ print("p*:")
 print(p)
 
 # run alternating multistart quadratic regularisation
-p, status = multistart(m,n,pl,pu,eval_res,None,samples=samples,maxit=maxit)
+p, status = regularisation(m,n,p0,eval_res,None,maxit=maxit)
 
 print("Status:")
 print(status)

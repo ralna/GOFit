@@ -52,6 +52,83 @@ struct Inform{
  *
  * Inputs:
  *
+ *  m - number of residuals
+ *
+ *  n - problem dimension
+ *
+ *  x - starting point
+ *
+ *  eval_res - function that evaluates the residual, must have the signature:
+ *
+ *     void eval_res(const Eigen::VectorXd &x, Eigen::VectorXd &res)
+ *
+ *   The value of the residual evaluated at x must be assigned to res.
+ *
+ * Optional Inputs:
+ *
+ *  maxit - maximum iterations
+ *
+ *  eps_g - gradient stopping tolerance
+ *
+ *  eps_s - step stopping tolerance
+ *
+ * Outputs:
+ *
+ *  x - minimal point
+ *
+ *  return value - 0 (converged) or 1 (iterations exceeded)
+ */
+int regularisation(int m, int n, Eigen::VectorXd &x,
+                   std::function<void(const Eigen::VectorXd&, Eigen::VectorXd&)> eval_res,
+                   int maxit=200, double eps_g=1e-4, double eps_s=1e-8);
+
+/*
+ * An implementation of adaptive quadratic regularisation.
+ *
+ * Inputs:
+ *
+ *  m - number of residuals
+ *
+ *  n - problem dimension
+ *
+ *  x - starting point
+ *
+ *  eval_res - function that evaluates the residual, must have the signature:
+ *
+ *     void eval_res(const Eigen::VectorXd &x, Eigen::VectorXd &res)
+ *
+ *   The value of the residual evaluated at x must be assigned to res.
+ *
+ *  eval_jac - function that evaluates the Jacobian, must have the signature:
+ *
+ *     void eval_jac(const Eigen::VectorXd &x, Eigen::MatrixXd &jac)
+ *
+ *   The Jacobian of the residual evaluated at x must be assigned to jac.
+ *
+ * Optional Inputs:
+ *
+ *  maxit - maximum iterations
+ *
+ *  eps_g - gradient stopping tolerance
+ *
+ *  eps_s - step stopping tolerance
+ *
+ * Outputs:
+ *
+ *  x - minimal point
+ *
+ *  return value - 0 (converged) or 1 (iterations exceeded)
+ */
+int regularisation(int m, int n, Eigen::VectorXd &x,
+                   std::function<void(const Eigen::VectorXd&, Eigen::VectorXd&)> eval_res,
+                   std::function<void(const Eigen::VectorXd&, Eigen::MatrixXd&)> eval_jac,
+                   int maxit=200, double eps_g=1e-4, double eps_s=1e-8);
+
+/*
+ * An implementation of adaptive quadratic regularisation.
+ *
+ * Inputs:
+ *
  *  control - control structure with the following members:
  *      maxit - maximum iterations
  *      eps_g - gradient stopping tolerance

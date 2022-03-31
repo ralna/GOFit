@@ -12,6 +12,7 @@
 #include <cmath>
 
 #include "regularisation.h"
+#include "findiff.h"
 #include <Eigen/QR>
 
 // method aliases
@@ -28,6 +29,112 @@ using std::max;
 // function prototypes
 void reg(const Control &control, const MatrixXd&, const VectorXd&, double&, VectorXd&);
 void reg_update(const Control &control, VectorXd&, double, const VectorXd&, double, const MatrixXd&, const VectorXd&, double&);
+
+/*
+ * An implementation of adaptive quadratic regularisation.
+ *
+ * Inputs:
+ *
+ *  m - number of residuals
+ *
+ *  n - problem dimension
+ *
+ *  x - starting point
+ *
+ *  eval_res - function that evaluates the residual, must have the signature:
+ *
+ *     void eval_res(const Eigen::VectorXd &x, Eigen::VectorXd &res)
+ *
+ *   The value of the residual evaluated at x must be assigned to res.
+ *
+ * Optional Inputs:
+ *
+ *  maxit - maximum iterations
+ *
+ *  eps_g - gradient stopping tolerance
+ *
+ *  eps_s - step stopping tolerance
+ *
+ * Outputs:
+ *
+ *  x - minimal point
+ *
+ *  return value - 0 (converged) or 1 (iterations exceeded)
+ */
+int regularisation(int m, int n, VectorXd &x,
+                   function<void(const VectorXd&, VectorXd&)> eval_res,
+                   int maxit /*=200*/, double eps_g /*=1e-4*/, double eps_s /*=1e-8*/){
+
+    // Set control parameters
+    Control control;
+    control.maxit = maxit;
+    control.eps_g = eps_g;
+    control.eps_s = eps_s;
+
+    // Forward finite-difference Jacobian
+    auto eval_jac = [&eval_res,m,n] (const VectorXd &x, MatrixXd &jac){
+        forward_difference_jac(m,n,x,eval_res,jac);
+    };
+
+    Inform inform;
+    int status = regularisation(control, inform, m, n, x, eval_res, eval_jac);
+
+    return status;
+}
+
+/*
+ * An implementation of adaptive quadratic regularisation.
+ *
+ * Inputs:
+ *
+ *  m - number of residuals
+ *
+ *  n - problem dimension
+ *
+ *  x - starting point
+ *
+ *  eval_res - function that evaluates the residual, must have the signature:
+ *
+ *     void eval_res(const Eigen::VectorXd &x, Eigen::VectorXd &res)
+ *
+ *   The value of the residual evaluated at x must be assigned to res.
+ *
+ *  eval_jac - function that evaluates the Jacobian, must have the signature:
+ *
+ *     void eval_jac(const Eigen::VectorXd &x, Eigen::MatrixXd &jac)
+ *
+ *   The Jacobian of the residual evaluated at x must be assigned to jac.
+ *
+ * Optional Inputs:
+ *
+ *  maxit - maximum iterations
+ *
+ *  eps_g - gradient stopping tolerance
+ *
+ *  eps_s - step stopping tolerance
+ *
+ * Outputs:
+ *
+ *  x - minimal point
+ *
+ *  return value - 0 (converged) or 1 (iterations exceeded)
+ */
+int regularisation(int m, int n, VectorXd &x,
+                   function<void(const VectorXd&, VectorXd&)> eval_res,
+                   function<void(const VectorXd&, MatrixXd&)> eval_jac,
+                   int maxit /*=200*/, double eps_g /*=1e-4*/, double eps_s /*=1e-8*/){
+
+    // Set control parameters
+    Control control;
+    control.maxit = maxit;
+    control.eps_g = eps_g;
+    control.eps_s = eps_s;
+
+    Inform inform;
+    int status = regularisation(control, inform, m, n, x, eval_res, eval_jac);
+
+    return status;
+}
 
 /*
  * An implementation of adaptive quadratic regularisation.
