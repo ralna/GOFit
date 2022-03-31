@@ -9,8 +9,8 @@ CXXFLAGS = -Wall -g -std=c++17 -fopenmp
 #CXX = icpx
 #CXXFLAGS = -Wall -g -std=c++17 -qopenmp
 ############################
-#INC = -I/usr/local/include/eigen3
-INC = -I/usr/include/eigen3
+INC = -I/usr/local/include/eigen3
+#INC = -I/usr/include/eigen3
 #INC = -I/home/fowkes/Code/eigen3
 
 # What to build

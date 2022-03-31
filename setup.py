@@ -14,7 +14,7 @@ ext_modules = [
     Pybind11Extension("gofit",
         sorted(glob("src/*.cpp")),
         define_macros = [('VERSION_INFO', __version__)], # pass version to interface
-        include_dirs=["/usr/include/eigen3"],
+        include_dirs=["/usr/local/include/eigen3"],
         cxx_std=17,
         ),
 ]
@@ -45,6 +45,6 @@ setup(
         ],
     setup_requires=["pybind11"],
     ext_modules=ext_modules,
-    python_requires=">=3.8",
+    python_requires=">=3.6",
     zip_safe=False,
 )
