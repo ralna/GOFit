@@ -118,15 +118,15 @@ int regularisation(const Control &control, Inform &inform, int m, int n, VectorX
         }
 
         #if VERBOSE
-        printf("\nIteration %d",k);
-        printf("\n sigma_k: %.2f",sigma);
+        printf("\nIteration %d", k);
+        printf("\n sigma_k: %.2f", sigma);
         printf("\n s_k: ");
-        for(int i = 0; i < n; i++) printf(" %.2f",s(i));
+        for(int i = 0; i < n; i++) printf(" %.2f", s(i));
         printf("\n x_k: ");
-        for(int i = 0; i < n; i++) printf(" %.2f",x(i));
-        printf("\n f(x_k): %.2f",fx);
-        printf("\n ||r(x_k)||: %.2f",r.norm());
-        printf("\n ||g(x_k)||: %.2f",gradf.norm());
+        for(int i = 0; i < n; i++) printf(" %.2f", x(i));
+        printf("\n f(x_k): %.2f", fx);
+        printf("\n ||r(x_k)||: %.2f", r.norm());
+        printf("\n ||g(x_k)||: %.2f", gradf.norm());
         printf("\n");
         #endif
 
@@ -211,6 +211,7 @@ void reg(const Control &control, const MatrixXd &J, const VectorXd &gradf, doubl
     // Size of Jacobian
     int m = J.rows();
     int n = J.cols();
+    int k = min(m,n);
 
     // If J'J singular limit sigma to sigma_lim
     auto qrJ = J.colPivHouseholderQr(); // rank-revealing factorisation
@@ -225,9 +226,9 @@ void reg(const Control &control, const MatrixXd &J, const VectorXd &gradf, doubl
     perJ.bottomRows(n) = sqrt(sigma)*I;
 
     // Solve *perturbed* normal equations (J'J + sigmaI)s = -gradf to find search direction s
-    auto qr = perJ.colPivHouseholderQr(); // then R'R = J'J + sigmaI
-    auto R = qr.matrixR().topLeftCorner(n,n).template triangularView<Eigen::UpLoType::Upper>();
-    auto RT = qr.matrixR().topLeftCorner(n,n).template triangularView<Eigen::UpLoType::Upper>().transpose();
+    auto qr = perJ.householderQr(); // then R'R = J'J + sigmaI
+    auto R = qr.matrixQR().topLeftCorner(k,n).template triangularView<Eigen::UpLoType::Upper>();
+    auto RT = qr.matrixQR().topLeftCorner(k,n).template triangularView<Eigen::UpLoType::Upper>().transpose();
     VectorXd t = RT.solve(-gradf); // solve R't = -gradf
     s = R.solve(t);                // solve Rs = t
 }
