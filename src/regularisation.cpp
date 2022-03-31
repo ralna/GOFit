@@ -1,5 +1,5 @@
 /*
- * An implementation of adpative quadratic regularisation. See:
+ * An implementation of adaptive quadratic regularisation. See:
  *
  * Gould, N. I., Rees, T., & Scott, J. A. (2019).
  * Convergence and evaluation-complexity analysis of a regularized
@@ -22,12 +22,15 @@ using std::printf;
 using std::min;
 using std::max;
 
+// Debug printing
+#define VERBOSE false
+
 // function prototypes
 void reg(const Control &control, const MatrixXd&, const VectorXd&, double&, VectorXd&);
 void reg_update(const Control &control, VectorXd&, double, const VectorXd&, double, const MatrixXd&, const VectorXd&, double&);
 
 /*
- * An implementation of adpative quadratic regularisation.
+ * An implementation of adaptive quadratic regularisation.
  *
  * Inputs:
  *
@@ -69,6 +72,10 @@ int regularisation(const Control &control, Inform &inform, int m, int n, VectorX
                    function<void(const VectorXd&, VectorXd&)> eval_res,
                    function<void(const VectorXd&, MatrixXd&)> eval_jac){
 
+    #if VERBOSE
+    printf("=+= Quadratic Regularisation Algorithm =+=\n");
+    #endif
+
     // Initialisation
     int k = 0;     // iteration counter
     double sigma;  // regularisation parameter
@@ -109,6 +116,19 @@ int regularisation(const Control &control, Inform &inform, int m, int n, VectorX
             inform.sigma = sigma;
             return 0;
         }
+
+        #if VERBOSE
+        printf("\nIteration %d",k);
+        printf("\n sigma_k: %.2f",sigma);
+        printf("\n s_k: ");
+        for(int i = 0; i < n; i++) printf(" %.2f",s(i));
+        printf("\n x_k: ");
+        for(int i = 0; i < n; i++) printf(" %.2f",x(i));
+        printf("\n f(x_k): %.2f",fx);
+        printf("\n ||r(x_k)||: %.2f",r.norm());
+        printf("\n ||g(x_k)||: %.2f",gradf.norm());
+        printf("\n");
+        #endif
 
         // Update regularisation parameter and take step
         VectorXd xs = x+s;

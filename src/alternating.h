@@ -1,5 +1,5 @@
 /*
- * Alternating multistart adpative quadratic regularisation. See:
+ * Alternating multistart adaptive quadratic regularisation. See:
  *
  * O’Flynn, M., Fowkes, J., & Gould, N. (2022).
  * Global optimization of crystal field parameter fitting in Mantid.
@@ -14,7 +14,7 @@
 #include "multistart.h"
 
 /*
- * Alternating multistart adpative quadratic regularisation.
+ * Alternating multistart adaptive quadratic regularisation.
  *
  * Inputs:
  *

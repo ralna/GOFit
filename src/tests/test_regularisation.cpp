@@ -1,5 +1,5 @@
 /*
- * Test for the implementation of adpative quadratic regularisation. See:
+ * Test for the implementation of adaptive quadratic regularisation. See:
  *
  * Gould, N. I., Rees, T., & Scott, J. A. (2019).
  * Convergence and evaluation-complexity analysis of a regularized

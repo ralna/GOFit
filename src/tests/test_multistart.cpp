@@ -1,5 +1,5 @@
 /*
- * Tests for multistart adpative quadratic regularisation. See:
+ * Tests for multistart adaptive quadratic regularisation. See:
  *
  * O’Flynn, M., Fowkes, J., & Gould, N. (2022).
  * Global optimization of crystal field parameter fitting in Mantid.

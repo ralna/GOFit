@@ -11,13 +11,14 @@ def fun(p,x):
     return p[0] + p[1]*x + p[2]*x**2 + p[3]*x**3
 
 def eval_res(p):
-    return data[:,1] - fun(p,data[:,0])
+    x = data[:,0]
+    y = data[:,1]
+    return y - fun(p,x)
 
-print('Norm of residual at minimizer:')
-res = eval_res([4,3,2,1])
-print(np.sum(res.dot(res)))
-print('Residual shape:')
-print(res.shape)
+def eval_jac(p):
+    x = data[:,0]
+    ones = np.ones(len(x))
+    return -1*np.transpose([ones, x, x**2, x**3])
 
 # Problem data
 m = data.shape[0]
@@ -31,7 +32,15 @@ samples = 100
 maxit = 200
 
 # run alternating multistart quadratic regularisation
-p, status = multistart(m,n,pl,pu,eval_res,samples=samples,maxit=maxit)
+p, status = multistart(m,n,pl,pu,eval_res,eval_jac,samples=samples,maxit=maxit)
+
+print("Status:")
+print(status)
+print("p*:")
+print(p)
+
+# run alternating multistart quadratic regularisation
+p, status = multistart(m,n,pl,pu,eval_res,None,samples=samples,maxit=maxit)
 
 print("Status:")
 print(status)

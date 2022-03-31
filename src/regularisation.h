@@ -1,5 +1,5 @@
 /*
- * An implementation of adpative quadratic regularisation. See:
+ * An implementation of adaptive quadratic regularisation. See:
  *
  * Gould, N. I., Rees, T., & Scott, J. A. (2019).
  * Convergence and evaluation-complexity analysis of a regularized
@@ -48,7 +48,7 @@ struct Inform{
 };
 
 /*
- * An implementation of adpative quadratic regularisation.
+ * An implementation of adaptive quadratic regularisation.
  *
  * Inputs:
  *

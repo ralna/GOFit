@@ -1,5 +1,5 @@
 /*
- * Python Interface for Alternating multistart adpative quadratic regularisation. See:
+ * Python Interface for Alternating multistart adaptive quadratic regularisation. See:
  *
  * O’Flynn, M., Fowkes, J., & Gould, N. (2022).
  * Global optimization of crystal field parameter fitting in Mantid.
@@ -49,14 +49,27 @@ tuple<VectorXd, int> py_alternating(int m, int n, int n_split, const VectorXd &x
 // Python multistart function that returns x and status
 tuple<VectorXd, int> py_multistart(int m, int n, const VectorXd &xl, const VectorXd &xu,
                                    function<VectorXd(const VectorXd&)> py_eval_res,
+                                   function<MatrixXd(const VectorXd&)> py_eval_jac,
                                    int samples, int maxit, double eps_r, double eps_g, double eps_s){
 
     // Wrap Python eval_res to C++ signature that we support
     auto eval_res = [&py_eval_res] (const VectorXd &x, VectorXd &res){ res = py_eval_res(x); };
 
-    // Call C++ multistart function
     VectorXd x(n);
-    int status = multistart_simple(m, n, xl, xu, eval_res, x, samples, maxit, eps_r, eps_g, eps_s);
+    int status;
+    if(py_eval_jac){ // If Python eval_jac given
+
+        // Wrap Python eval_jac to C++ signature that we support
+        auto eval_jac = [&py_eval_jac] (const VectorXd &x, MatrixXd &jac){ jac = py_eval_jac(x); };
+
+        // Call C++ multistart function
+        status = multistart(m, n, xl, xu, eval_res, eval_jac, x, samples, maxit, eps_r, eps_g, eps_s);
+
+    }else{ // Otherwise Python eval_jac not given
+
+        // Call C++ multistart function with finite-difference Jacobian
+        status = multistart(m, n, xl, xu, eval_res, x, samples, maxit, eps_r, eps_g, eps_s);
+    }
 
     // Return minimizer and status to Python
     return {x, status};
@@ -91,7 +104,7 @@ PYBIND11_MODULE(gofit, m) {
           py::arg("eps_s") = 1e-8,
 
           // function docstring
-          "Alternating multistart adpative quadratic regularisation"
+          "Alternating multistart adaptive quadratic regularisation"
     );
 
     // multistart function definition
@@ -103,6 +116,7 @@ PYBIND11_MODULE(gofit, m) {
           py::arg("xl"),
           py::arg("xu"),
           py::arg("eval_res"),
+          py::arg("eval_jac"),
           py::pos_only(),
 
           // keyword-only arguments with defaults
@@ -114,7 +128,7 @@ PYBIND11_MODULE(gofit, m) {
           py::arg("eps_s") = 1e-8,
 
           // function docstring
-          "Multistart adpative quadratic regularisation"
+          "Multistart adaptive quadratic regularisation"
     );
 
     // get version number from setup.py

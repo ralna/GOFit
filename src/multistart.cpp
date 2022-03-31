@@ -1,5 +1,5 @@
 /*
- * Multistart adpative quadratic regularisation. See:
+ * Multistart adaptive quadratic regularisation. See:
  *
  * O’Flynn, M., Fowkes, J., & Gould, N. (2022).
  * Global optimization of crystal field parameter fitting in Mantid.
@@ -21,7 +21,7 @@ using Eigen::all;
 using std::function;
 
 /*
- * Multistart adpative quadratic regularisation (Simple Interface)
+ * Multistart adaptive quadratic regularisation
  *
  * Inputs:
  *
@@ -57,10 +57,10 @@ using std::function;
  *
  *  return value - 0 (converged) or 1 (iterations exceeded)
  */
-int multistart_simple(int m, int n, const VectorXd &xl, const VectorXd &xu,
-                      function<void(const VectorXd&, VectorXd&)> eval_res,
-                      VectorXd &x, int samples /*=100*/, int maxit /*=200*/,
-                      double eps_r /*=1e-5*/, double eps_g /*=1e-4*/, double eps_s /*=1e-8*/){
+int multistart(int m, int n, const VectorXd &xl, const VectorXd &xu,
+               function<void(const VectorXd&, VectorXd&)> eval_res,
+               VectorXd &x, int samples /*=100*/, int maxit /*=200*/,
+               double eps_r /*=1e-5*/, double eps_g /*=1e-4*/, double eps_s /*=1e-8*/){
 
     // Set control parameters
     Control control;
@@ -79,9 +79,69 @@ int multistart_simple(int m, int n, const VectorXd &xl, const VectorXd &xu,
     return status;
 }
 
+/*
+ * Multistart adaptive quadratic regularisation
+ *
+ * Inputs:
+ *
+ *  m - number of residuals (number of data points)
+ *
+ *  n - number of parameters (dimension of the problem)
+ *
+ *  xl - lower bounds of the parameters to optimize
+ *
+ *  xu - upper bounds of the parameters to optimize
+ *
+ *  eval_res - function that evaluates the residual, must have the signature:
+ *
+ *     void eval_res(const Eigen::VectorXd &x, Eigen::VectorXd &res)
+ *
+ *   The value of the residual evaluated at x must be assigned to res.
+ *
+ *  eval_jac - function that evaluates the Jacobian, must have the signature:
+ *
+ *     void eval_jac(const Eigen::VectorXd &x, Eigen::MatrixXd &jac)
+ *
+ *   The Jacobian of the residual evaluated at x must be assigned to jac.
+ *
+ * Optional Inputs:
+ *
+ *  samples - number of Latin Hypercube initial points
+ *
+ *  maxit - maximum iterations
+ *
+ *  eps_r - residual tolerance
+ *
+ *  eps_g - gradient stopping tolerance
+ *
+ *  eps_s - step stopping tolerance
+ *
+ * Outputs:
+ *
+ *  x - minimal point
+ *
+ *  return value - 0 (converged) or 1 (iterations exceeded)
+ */
+int multistart(int m, int n, const VectorXd &xl, const VectorXd &xu,
+               function<void(const VectorXd&, VectorXd&)> eval_res,
+               function<void(const VectorXd&, MatrixXd&)> eval_jac,
+               VectorXd &x, int samples /*=100*/, int maxit /*=200*/,
+               double eps_r /*=1e-5*/, double eps_g /*=1e-4*/, double eps_s /*=1e-8*/){
+
+    // Set control parameters
+    Control control;
+    control.maxit = maxit;
+    control.eps_g = eps_g;
+    control.eps_s = eps_s;
+
+    Inform inform;
+    int status = multistart(control, inform, samples, m, n, eps_r, xl, xu, x, eval_res, eval_jac, false);
+
+    return status;
+}
 
 /*
- * Multistart adpative quadratic regularisation
+ * Multistart adaptive quadratic regularisation
  *
  * Inputs:
  *
