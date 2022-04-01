@@ -155,7 +155,7 @@ int alternating(int m, int n, int n_split, const VectorXd &x0,
 
     // Stage 4: Optimize over shape parameters again
     VectorXd &y4 = y2; // starting point and optimization result
-    status = regularisation(control,inform,m,n2,y3,eval_res4,eval_jac4);
+    status = regularisation(control,inform,m,n2,y4,eval_res4,eval_jac4);
 
     // Rescale optimized parameters back to original bounds
     x.head(n1) = y3;
