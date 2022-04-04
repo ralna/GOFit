@@ -1,6 +1,8 @@
 GOFit TODO
 ==========
 
+- Switch build system to CMake so that Eigen is automatically found
+
 - Standardise the Python interface API (coordinate with Duc)
 
 - Add to Python interface checks on the bounds and minima found
