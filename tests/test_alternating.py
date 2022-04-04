@@ -27,7 +27,7 @@ samples = 10
 maxit = 200
 
 # run alternating multistart quadratic regularisation
-x, status = alternating(m,n,n_split,x0,xl,xu,eval_res,samples=samples,maxit=maxit)
+x, status = alternating(m, n, n_split, x0, xl, xu, eval_res, samples=samples, maxit=maxit)
 
 print("status:")
 print(status)

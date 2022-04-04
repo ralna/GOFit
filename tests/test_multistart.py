@@ -22,8 +22,8 @@ xu = 10*np.ones(n)
 samples = 10
 maxit = 100
 
-# run alternating multistart quadratic regularisation
-x, status = multistart(m,n,xl,xu,eval_res,None,samples=samples,maxit=maxit)
+# run multistart quadratic regularisation
+x, status = multistart(m, n, xl, xu, eval_res, None, samples=samples, maxit=maxit)
 
 print("status:")
 print(status)
