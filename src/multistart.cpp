@@ -51,6 +51,8 @@ using std::function;
  *
  *  eps_s - step stopping tolerance
  *
+ *  scaling - whether to scale the optimization parameters
+ *
  * Outputs:
  *
  *  x - minimal point
@@ -60,7 +62,8 @@ using std::function;
 int multistart(int m, int n, const VectorXd &xl, const VectorXd &xu,
                function<void(const VectorXd&, VectorXd&)> eval_res,
                VectorXd &x, int samples /*=100*/, int maxit /*=200*/,
-               double eps_r /*=1e-5*/, double eps_g /*=1e-4*/, double eps_s /*=1e-8*/){
+               double eps_r /*=1e-5*/, double eps_g /*=1e-4*/, double eps_s /*=1e-8*/,
+               bool scaling /*=true*/){
 
     // Set control parameters
     Control control;
@@ -68,13 +71,41 @@ int multistart(int m, int n, const VectorXd &xl, const VectorXd &xu,
     control.eps_g = eps_g;
     control.eps_s = eps_s;
 
-    // Forward finite-difference Jacobian
-    auto eval_jac = [&eval_res,m,n] (const VectorXd &x, MatrixXd &jac){
-        forward_difference_jac(m,n,x,eval_res,jac);
-    };
-
+    // Set inform parameters
     Inform inform;
-    int status = multistart(control, inform, samples, m, n, eps_r, xl, xu, x, eval_res, eval_jac, false);
+    int status;
+
+    if(scaling){
+
+        // Scaled parameter upper and lower bounds
+        VectorXd yl = VectorXd::Zero(n);
+        VectorXd yu = VectorXd::Ones(n);
+
+        // Scaled residual
+        auto scaled_eval_res = [&xl,&xu,&eval_res] (const VectorXd &y, VectorXd &res){
+            eval_res(xl.array() + (xu - xl).array() * y.array(), res);
+        };
+
+        // Scaled forward finite-difference Jacobian
+        auto scaled_eval_jac = [&scaled_eval_res,m,n] (const VectorXd &y, MatrixXd &jac){
+            forward_difference_jac(m,n,y,scaled_eval_res,jac);
+        };
+
+        status = multistart(control, inform, samples, m, n, eps_r, yl, yu, x, scaled_eval_res, scaled_eval_jac, false);
+
+        // Rescale optimized parameters back to original bounds
+        x = xl.array() + (xu - xl).array() * x.array();
+
+    }else{
+
+        // Forward finite-difference Jacobian
+        auto eval_jac = [&eval_res,m,n] (const VectorXd &x, MatrixXd &jac){
+            forward_difference_jac(m,n,x,eval_res,jac);
+        };
+
+        status = multistart(control, inform, samples, m, n, eps_r, xl, xu, x, eval_res, eval_jac, false);
+
+    }
 
     return status;
 }
@@ -116,6 +147,8 @@ int multistart(int m, int n, const VectorXd &xl, const VectorXd &xu,
  *
  *  eps_s - step stopping tolerance
  *
+ *  scaling - whether to scale the optimization parameters
+ *
  * Outputs:
  *
  *  x - minimal point
@@ -126,7 +159,8 @@ int multistart(int m, int n, const VectorXd &xl, const VectorXd &xu,
                function<void(const VectorXd&, VectorXd&)> eval_res,
                function<void(const VectorXd&, MatrixXd&)> eval_jac,
                VectorXd &x, int samples /*=100*/, int maxit /*=200*/,
-               double eps_r /*=1e-5*/, double eps_g /*=1e-4*/, double eps_s /*=1e-8*/){
+               double eps_r /*=1e-5*/, double eps_g /*=1e-4*/, double eps_s /*=1e-8*/,
+               bool scaling /*=true*/){
 
     // Set control parameters
     Control control;
@@ -134,8 +168,37 @@ int multistart(int m, int n, const VectorXd &xl, const VectorXd &xu,
     control.eps_g = eps_g;
     control.eps_s = eps_s;
 
+    // Set inform parameters
     Inform inform;
-    int status = multistart(control, inform, samples, m, n, eps_r, xl, xu, x, eval_res, eval_jac, false);
+    int status;
+
+    if(scaling){
+
+        // Scaled parameter upper and lower bounds
+        VectorXd yl = VectorXd::Zero(n);
+        VectorXd yu = VectorXd::Ones(n);
+
+        // Scaled residual
+        auto scaled_eval_res = [&xl,&xu,&eval_res] (const VectorXd &y, VectorXd &res){
+            eval_res(xl.array() + (xu - xl).array() * y.array(), res);
+        };
+
+        // Scaled Jacobian
+        auto scaled_eval_jac = [&xl,&xu,&eval_jac] (const VectorXd &y, MatrixXd &jac){
+            eval_jac(xl.array() + (xu - xl).array() * y.array(), jac);
+            jac = jac.array().rowwise() * (xu-xl).transpose().array();
+        };
+
+        status = multistart(control, inform, samples, m, n, eps_r, yl, yu, x, scaled_eval_res, scaled_eval_jac, false);
+
+        // Rescale optimized parameters back to original bounds
+        x = xl.array() + (xu - xl).array() * x.array();
+
+    }else{
+
+        status = multistart(control, inform, samples, m, n, eps_r, xl, xu, x, eval_res, eval_jac, false);
+
+    }
 
     return status;
 }

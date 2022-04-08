@@ -50,7 +50,8 @@ tuple<VectorXd, int> py_alternating(int m, int n, int n_split, const VectorXd &x
 tuple<VectorXd, int> py_multistart(int m, int n, const VectorXd &xl, const VectorXd &xu,
                                    function<VectorXd(const VectorXd&)> py_eval_res,
                                    function<MatrixXd(const VectorXd&)> py_eval_jac,
-                                   int samples, int maxit, double eps_r, double eps_g, double eps_s){
+                                   int samples, int maxit, double eps_r, double eps_g, double eps_s,
+                                   bool scaling){
 
     // Wrap Python eval_res to C++ signature that we support
     auto eval_res = [&py_eval_res] (const VectorXd &x, VectorXd &res){ res = py_eval_res(x); };
@@ -63,12 +64,12 @@ tuple<VectorXd, int> py_multistart(int m, int n, const VectorXd &xl, const Vecto
         auto eval_jac = [&py_eval_jac] (const VectorXd &x, MatrixXd &jac){ jac = py_eval_jac(x); };
 
         // Call C++ multistart function
-        status = multistart(m, n, xl, xu, eval_res, eval_jac, x, samples, maxit, eps_r, eps_g, eps_s);
+        status = multistart(m, n, xl, xu, eval_res, eval_jac, x, samples, maxit, eps_r, eps_g, eps_s, scaling);
 
     }else{ // Otherwise Python eval_jac not given
 
         // Call C++ multistart function with finite-difference Jacobian
-        status = multistart(m, n, xl, xu, eval_res, x, samples, maxit, eps_r, eps_g, eps_s);
+        status = multistart(m, n, xl, xu, eval_res, x, samples, maxit, eps_r, eps_g, eps_s, scaling);
     }
 
     // Return minimizer and status to Python
@@ -156,6 +157,7 @@ PYBIND11_MODULE(gofit, m) {
           py::arg("eps_r") = 1e-5,
           py::arg("eps_g") = 1e-4,
           py::arg("eps_s") = 1e-8,
+          py::arg("scaling") = true,
 
           // function docstring
           "Multistart adaptive quadratic regularisation"

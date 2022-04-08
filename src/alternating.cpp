@@ -111,7 +111,7 @@ int alternating(int m, int n, int n_split, const VectorXd &x0,
         VectorXd xk(n1+n2);
         xk.head(n1) = y1;
         xk.tail(n2) = y2;
-        xk = xl.array() + (xu.array() - xl.array())*xk.array();
+        xk = xl.array() + (xu - xl).array() * xk.array();
         eval_res(xk,res2);
     };
 
@@ -128,7 +128,7 @@ int alternating(int m, int n, int n_split, const VectorXd &x0,
         VectorXd xk(n1+n2);
         xk.head(n1) = y3;
         xk.tail(n2) = y2;
-        xk = xl.array() + (xu.array() - xl.array())*xk.array();
+        xk = xl.array() + (xu - xl).array() * xk.array();
         eval_res(xk,res3);
     };
 
@@ -145,7 +145,7 @@ int alternating(int m, int n, int n_split, const VectorXd &x0,
         VectorXd xk(n1+n2);
         xk.head(n1) = y3;
         xk.tail(n2) = y4;
-        xk = xl.array() + (xu.array() - xl.array())*xk.array();
+        xk = xl.array() + (xu - xl).array() * xk.array();
         eval_res(xk,res4);
     };
 
@@ -160,7 +160,7 @@ int alternating(int m, int n, int n_split, const VectorXd &x0,
     // Rescale optimized parameters back to original bounds
     x.head(n1) = y3;
     x.tail(n2) = y4;
-    x = xl.array() + (xu.array() - xl.array()) * x.array();
+    x = xl.array() + (xu - xl).array() * x.array();
 
     return status;
 }

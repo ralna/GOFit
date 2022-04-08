@@ -1,8 +1,6 @@
 GOFit TODO
 ==========
 
-- Standardise the Python interface API (coordinate with Duc)
-
 - Add to Python interface checks on the bounds and minima found
 
 - Add good tests and setup Github Actions ymls

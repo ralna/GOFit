@@ -44,6 +44,8 @@
  *
  *  eps_s - step stopping tolerance
  *
+ *  scaling - whether to scale the optimization parameters
+ *
  * Outputs:
  *
  *  x - minimal point
@@ -53,7 +55,8 @@
 int multistart(int m, int n, const Eigen::VectorXd &xl, const Eigen::VectorXd &xu,
                std::function<void(const Eigen::VectorXd&, Eigen::VectorXd&)> eval_res,
                Eigen::VectorXd &x, int samples=100, int maxit=200,
-               double eps_r=1e-5, double eps_g=1e-4, double eps_s=1e-8);
+               double eps_r=1e-5, double eps_g=1e-4, double eps_s=1e-8,
+               bool scaling=true);
 
 /*
  * Multistart adaptive quadratic regularisation
@@ -92,6 +95,8 @@ int multistart(int m, int n, const Eigen::VectorXd &xl, const Eigen::VectorXd &x
  *
  *  eps_s - step stopping tolerance
  *
+ *  scaling - whether to scale the optimization parameters
+ *
  * Outputs:
  *
  *  x - minimal point
@@ -102,7 +107,8 @@ int multistart(int m, int n, const Eigen::VectorXd &xl, const Eigen::VectorXd &x
                std::function<void(const Eigen::VectorXd&, Eigen::VectorXd&)> eval_res,
                std::function<void(const Eigen::VectorXd&, Eigen::MatrixXd&)> eval_jac,
                Eigen::VectorXd &x, int samples=100, int maxit=200,
-               double eps_r=1e-5, double eps_g=1e-4, double eps_s=1e-8);
+               double eps_r=1e-5, double eps_g=1e-4, double eps_s=1e-8,
+               bool scaling=true);
 
 /*
  * Multistart adaptive quadratic regularisation

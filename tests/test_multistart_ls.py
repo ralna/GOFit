@@ -32,7 +32,23 @@ pu = np.array([10, 5, 5, 3])
 samples = 10
 maxit = 200
 
-# run multistart quadratic regularisation
+# run multistart quadratic regularisation (no scaling)
+p, status = multistart(m, n, pl, pu, eval_res, jac=eval_jac, samples=samples, maxit=maxit, scaling=False)
+
+print("Status:")
+print(status)
+print("p*:")
+print(p)
+
+# run multistart quadratic regularisation (no scaling)
+p, status = multistart(m, n, pl, pu, eval_res, samples=samples, maxit=maxit, scaling=False)
+
+print("Status:")
+print(status)
+print("p*:")
+print(p)
+
+# run multistart quadratic regularisation (scaling)
 p, status = multistart(m, n, pl, pu, eval_res, jac=eval_jac, samples=samples, maxit=maxit)
 
 print("Status:")
@@ -40,7 +56,7 @@ print(status)
 print("p*:")
 print(p)
 
-# run multistart quadratic regularisation
+# run multistart quadratic regularisation (scaling)
 p, status = multistart(m, n, pl, pu, eval_res, samples=samples, maxit=maxit)
 
 print("Status:")
