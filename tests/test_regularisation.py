@@ -29,7 +29,7 @@ p0 = np.array([8, 2.98, 4, 1.02])
 maxit = 200
 
 # run quadratic regularisation
-p, status = regularisation(m, n, p0, eval_res, eval_jac, maxit=maxit)
+p, status = regularisation(m, n, p0, eval_res, jac=eval_jac, maxit=maxit)
 
 print("Status:")
 print(status)
@@ -37,7 +37,7 @@ print("p*:")
 print(p)
 
 # run quadratic regularisation
-p, status = regularisation(m, n, p0, eval_res, None, maxit=maxit)
+p, status = regularisation(m, n, p0, eval_res, maxit=maxit)
 
 print("Status:")
 print(status)

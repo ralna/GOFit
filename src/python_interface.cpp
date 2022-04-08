@@ -120,7 +120,7 @@ PYBIND11_MODULE(gofit, m) {
           py::arg("x0"),
           py::arg("xl"),
           py::arg("xu"),
-          py::arg("eval_res"),
+          py::arg("res"),
           py::pos_only(),
 
           // keyword-only arguments with defaults
@@ -143,9 +143,11 @@ PYBIND11_MODULE(gofit, m) {
           py::arg("n"),
           py::arg("xl"),
           py::arg("xu"),
-          py::arg("eval_res"),
-          py::arg("eval_jac"),
+          py::arg("res"),
           py::pos_only(),
+
+          // position and keyword arguments with defaults
+          py::arg("jac") = nullptr,
 
           // keyword-only arguments with defaults
           py::kw_only(),
@@ -166,9 +168,11 @@ PYBIND11_MODULE(gofit, m) {
           py::arg("m"),
           py::arg("n"),
           py::arg("x"),
-          py::arg("eval_res"),
-          py::arg("eval_jac"),
+          py::arg("res"),
           py::pos_only(),
+
+          // position and keyword arguments with defaults
+          py::arg("jac") = nullptr,
 
           // keyword-only arguments with defaults
           py::kw_only(),

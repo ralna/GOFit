@@ -23,7 +23,7 @@ samples = 10
 maxit = 100
 
 # run multistart quadratic regularisation
-x, status = multistart(m, n, xl, xu, eval_res, None, samples=samples, maxit=maxit)
+x, status = multistart(m, n, xl, xu, eval_res, samples=samples, maxit=maxit)
 
 print("status:")
 print(status)
