@@ -13,6 +13,7 @@
 #include "alternating.h"
 
 #include <tuple>
+#include <stdexcept>
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>
 #include <pybind11/eigen.h>
@@ -28,12 +29,27 @@ using Eigen::MatrixXd;
 using Eigen::VectorXd;
 using std::function;
 using std::tuple;
+using std::invalid_argument;
+
 
 // Python alternating function that returns x and status
 tuple<VectorXd, int> py_alternating(int m, int n, int n_split, const VectorXd &x0,
-                                      const VectorXd &xl, const VectorXd &xu,
-                                      function<VectorXd(const VectorXd&)> py_eval_res,
-                                      int samples, int maxit, double eps_r, double eps_g, double eps_s){
+                                    const VectorXd &xl, const VectorXd &xu,
+                                    function<VectorXd(const VectorXd&)> py_eval_res,
+                                    int samples, int maxit, double eps_r, double eps_g, double eps_s){
+
+    // Check arguments
+    if(m <= 0 || n <= 0 || n_split <= 0 || samples <= 0 || maxit < 0 || eps_r <= 0 || eps_g <= 0 || eps_s <= 0){
+        throw invalid_argument("scalar arguments must be strictly positive");
+    }else if(x0.size() != n || xl.size() != n || xu.size() != n){
+        throw invalid_argument("vector arguments must all be of size n");
+    }else if(n_split >= n){
+        throw invalid_argument("n_split must be less than n");
+    }else if((xl.array() >= xu.array()).any()){
+        throw invalid_argument("xu must be strictly greater than xl");
+    }else if((xl.array() > x0.array()).any() || (xu.array() < x0.array()).any()){
+        throw invalid_argument("x0 must be contained in [xl,xu]");
+    }
 
     // Wrap Python eval_res to C++ signature that we support
     auto eval_res = [&py_eval_res] (const VectorXd &x, VectorXd &res){ res = py_eval_res(x); };
@@ -52,6 +68,15 @@ tuple<VectorXd, int> py_multistart(int m, int n, const VectorXd &xl, const Vecto
                                    function<MatrixXd(const VectorXd&)> py_eval_jac,
                                    int samples, int maxit, double eps_r, double eps_g, double eps_s,
                                    bool scaling){
+
+    // Check arguments
+    if(m <= 0 || n <= 0 || samples <= 0 || maxit < 0 || eps_r <= 0 || eps_g <= 0 || eps_s <= 0){
+        throw invalid_argument("scalar arguments must be strictly positive");
+    }else if(xl.size() != n || xu.size() != n){
+        throw invalid_argument("vector arguments must all be of size n");
+    }else if((xl.array() >= xu.array()).any()){
+        throw invalid_argument("xu must be strictly greater than xl");
+    }
 
     // Wrap Python eval_res to C++ signature that we support
     auto eval_res = [&py_eval_res] (const VectorXd &x, VectorXd &res){ res = py_eval_res(x); };
@@ -81,6 +106,13 @@ tuple<VectorXd, int> py_regularisation(int m, int n, VectorXd &x,
                                        function<VectorXd(const VectorXd&)> py_eval_res,
                                        function<MatrixXd(const VectorXd&)> py_eval_jac,
                                        int maxit, double eps_g, double eps_s){
+
+    // Check arguments
+    if(m <= 0 || n <= 0 || maxit < 0 || eps_g <= 0 || eps_s <= 0){
+        throw invalid_argument("scalar arguments must be strictly positive");
+    }else if(x.size() != n){
+        throw invalid_argument("vector arguments must all be of size n");
+    }
 
     // Wrap Python eval_res to C++ signature that we support
     auto eval_res = [&py_eval_res] (const VectorXd &x, VectorXd &res){ res = py_eval_res(x); };
