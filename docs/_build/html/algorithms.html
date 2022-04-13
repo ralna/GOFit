@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GOFit Algorithms &mdash; GOFit 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Example Usage" href="example.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> GOFit
+            <img src="_static/stfc-logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing GOFit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html">Example Usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">GOFit Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#multistart-algorithm">Multistart Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#alternating-algorithm">Alternating Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#regularisation-algorithm">Regularisation Algorithm</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">GOFit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>GOFit Algorithms</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/algorithms.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="gofit-algorithms">
+<h1>GOFit Algorithms<a class="headerlink" href="#gofit-algorithms" title="Permalink to this headline"></a></h1>
+<p>The GOFit module contains the following three optimization algorithms for parameter fitting nonlinear least-squares problems. The first two are global optimization algorithms and the third is an interface to the local optimization algorithm that is used within the global algorithms. Note that all algorithms expect numpy arrays for vector and matrix inputs.</p>
+<section id="multistart-algorithm">
+<h2>Multistart Algorithm<a class="headerlink" href="#multistart-algorithm" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="gofit.multistart">
+<span class="sig-prename descclassname"><span class="pre">gofit.</span></span><span class="sig-name descname"><span class="pre">multistart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">m,</span> <span class="pre">n,</span> <span class="pre">xl,</span> <span class="pre">xu,</span> <span class="pre">res</span> <span class="pre">[,</span> <span class="pre">jac=None,</span> <span class="pre">samples=100,</span> <span class="pre">maxit=200,</span> <span class="pre">eps_r=1e-05,</span> <span class="pre">eps_g=1e-04,</span> <span class="pre">eps_s=1e-08,</span> <span class="pre">scaling=True])</span> <span class="pre">-&gt;</span> <span class="pre">(x,</span> <span class="pre">status</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gofit.multistart" title="Permalink to this definition"></a></dt>
+<dd><p>Multistart global optimization algorithm. Starts multiple regularisation local optimization algorithms from a given number of randomly generated Latin Hypercube starting points.</p>
+<dl class="myst field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m</strong> (<em>int</em>) – number of residuals (number of data points)</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – number of parameters (dimension of the problem)</p></li>
+<li><p><strong>xl</strong> (<em>numpy.ndarray</em>) – lower bounds of the parameters to optimize</p></li>
+<li><p><strong>xu</strong> (<em>numpy.ndarray</em>) – upper bounds of the parameters to optimize</p></li>
+<li><p><strong>res</strong> (<em>callable</em>) – function that evaluates the residual, must have the signature <code class="docutils literal notranslate"><span class="pre">r</span> <span class="pre">=</span> <span class="pre">res(x)</span></code> where <code class="docutils literal notranslate"><span class="pre">r</span></code> is the residual (a <em>numpy.ndarray</em> of size <em>m</em>) evaluated at <code class="docutils literal notranslate"><span class="pre">x</span></code> (a <em>numpy.ndarray</em> of size <em>n</em>)</p></li>
+<li><p><strong>jac</strong> (<em>None</em><em> or </em><em>callable</em>) – optional function that evaluates the Jacobian, must have the signature <code class="docutils literal notranslate"><span class="pre">J</span> <span class="pre">=</span> <span class="pre">jac(x)</span></code> where <code class="docutils literal notranslate"><span class="pre">J</span></code> is the Jacobian (a <em>numpy.ndarray</em> of size <em>(m,n)</em>) of the residual evaluated at <code class="docutils literal notranslate"><span class="pre">x</span></code> (a <em>numpy.ndarray</em> of size <em>n</em>). If not given computes the Jacobian using finite-differences</p></li>
+<li><p><strong>samples</strong> (<em>int</em>) – number of Latin Hypercube starting points for the local solver</p></li>
+<li><p><strong>maxit</strong> (<em>int</em>) – maximum number of iterations for each local solver run</p></li>
+<li><p><strong>eps_r</strong> (<em>float</em>) – residual stopping tolerance</p></li>
+<li><p><strong>eps_g</strong> (<em>float</em>) – norm of gradient stopping tolerance</p></li>
+<li><p><strong>eps_s</strong> (<em>float</em>) – norm of step stopping tolerance</p></li>
+<li><p><strong>scaling</strong> (<em>bool</em>) – whether to scale the optimization parameters (recommended)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>optimal parameters, status code</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(<em>numpy.ndarray</em>,<em>int</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="alternating-algorithm">
+<h2>Alternating Algorithm<a class="headerlink" href="#alternating-algorithm" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="gofit.alternating">
+<span class="sig-prename descclassname"><span class="pre">gofit.</span></span><span class="sig-name descname"><span class="pre">alternating</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">m,</span> <span class="pre">n,</span> <span class="pre">n_split,</span> <span class="pre">x0,</span> <span class="pre">xl,</span> <span class="pre">xu,</span> <span class="pre">res</span> <span class="pre">[,</span> <span class="pre">samples=100,</span> <span class="pre">maxit=200,</span> <span class="pre">eps_r=1e-05,</span> <span class="pre">eps_g=1e-04,</span> <span class="pre">eps_s=1e-08])</span> <span class="pre">-&gt;</span> <span class="pre">(x,</span> <span class="pre">status</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gofit.alternating" title="Permalink to this definition"></a></dt>
+<dd><p>Alternating multistart global optimization algorithm. Assumes the parameters split into <code class="docutils literal notranslate"><span class="pre">n_split</span></code> model parameters and <code class="docutils literal notranslate"><span class="pre">n-n_split</span></code> shape parameters. Then proceeds as follows: 1. fix initial shape params, globally optimize model params; 2. fix model params, locally optimize shape params; 3. locally optimize over model params again; 4. locally optimize over shape params again.</p>
+<dl class="myst field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m</strong> (<em>int</em>) – number of residuals (number of data points)</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – number of parameters (dimension of the problem)</p></li>
+<li><p><strong>n_split</strong> (<em>int</em>) – parameter split point for alternating optimization (&lt;<em>n</em>)</p></li>
+<li><p><strong>x0</strong> (<em>numpy.ndarray</em>) – initial guess for the parameters</p></li>
+<li><p><strong>xl</strong> (<em>numpy.ndarray</em>) – lower bounds of the parameters to optimize</p></li>
+<li><p><strong>xu</strong> (<em>numpy.ndarray</em>) – upper bounds of the parameters to optimize</p></li>
+<li><p><strong>res</strong> (<em>callable</em>) – function that evaluates the residual, must have the signature <code class="docutils literal notranslate"><span class="pre">r</span> <span class="pre">=</span> <span class="pre">res(x)</span></code> where <code class="docutils literal notranslate"><span class="pre">r</span></code> is the residual (a <em>numpy.ndarray</em> of size <em>m</em>) evaluated at <code class="docutils literal notranslate"><span class="pre">x</span></code> (a <em>numpy.ndarray</em> of size <em>n</em>)</p></li>
+<li><p><strong>samples</strong> (<em>int</em>) – number of Latin Hypercube starting points for the local solver</p></li>
+<li><p><strong>maxit</strong> (<em>int</em>) – maximum number of iterations for each local solver run</p></li>
+<li><p><strong>eps_r</strong> (<em>float</em>) – residual stopping tolerance</p></li>
+<li><p><strong>eps_g</strong> (<em>float</em>) – norm of gradient stopping tolerance</p></li>
+<li><p><strong>eps_s</strong> (<em>float</em>) – norm of step stopping tolerance</p></li>
+<li><p><strong>scaling</strong> (<em>bool</em>) – whether to scale the optimization parameters (recommended)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>optimal parameters, status code</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(<em>numpy.ndarray</em>,<em>int</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="regularisation-algorithm">
+<h2>Regularisation Algorithm<a class="headerlink" href="#regularisation-algorithm" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="gofit.regularisation">
+<span class="sig-prename descclassname"><span class="pre">gofit.</span></span><span class="sig-name descname"><span class="pre">regularisation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">m,</span> <span class="pre">n,</span> <span class="pre">x,</span> <span class="pre">res</span> <span class="pre">[,</span> <span class="pre">jac=None,</span> <span class="pre">maxit=200,</span> <span class="pre">eps_g=1e-04,</span> <span class="pre">eps_s=1e-08])</span> <span class="pre">-&gt;</span> <span class="pre">(x,</span> <span class="pre">status</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gofit.regularisation" title="Permalink to this definition"></a></dt>
+<dd><p>Adaptive quadratic regularisation local optimization algorithm. Included for completeness.</p>
+<dl class="myst field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m</strong> (<em>int</em>) – number of residuals (number of data points)</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – number of parameters (dimension of the problem)</p></li>
+<li><p><strong>x0</strong> (<em>numpy.ndarray</em>) – initial guess for the parameters</p></li>
+<li><p><strong>res</strong> (<em>callable</em>) – function that evaluates the residual, must have the signature <code class="docutils literal notranslate"><span class="pre">r</span> <span class="pre">=</span> <span class="pre">res(x)</span></code> where <code class="docutils literal notranslate"><span class="pre">r</span></code> is the residual (a <em>numpy.ndarray</em> of size <em>m</em>) evaluated at <code class="docutils literal notranslate"><span class="pre">x</span></code> (a <em>numpy.ndarray</em> of size <em>n</em>)</p></li>
+<li><p><strong>jac</strong> (<em>None</em><em> or </em><em>callable</em>) – optional function that evaluates the Jacobian, must have the signature <code class="docutils literal notranslate"><span class="pre">J</span> <span class="pre">=</span> <span class="pre">jac(x)</span></code> where <code class="docutils literal notranslate"><span class="pre">J</span></code> is the Jacobian (a <em>numpy.ndarray</em> of size <em>(m,n)</em>) of the residual evaluated at <code class="docutils literal notranslate"><span class="pre">x</span></code> (a <em>numpy.ndarray</em> of size <em>n</em>). If not given computes the Jacobian using finite-differences</p></li>
+<li><p><strong>maxit</strong> (<em>int</em>) – maximum number of iterations for each local solver run</p></li>
+<li><p><strong>eps_g</strong> (<em>float</em>) – norm of gradient stopping tolerance</p></li>
+<li><p><strong>eps_s</strong> (<em>float</em>) – norm of step stopping tolerance</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>optimal parameters, status code</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(<em>numpy.ndarray</em>,<em>int</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="example.html" class="btn btn-neutral float-left" title="Example Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022 The Science and Technology Facilities Council (STFC).</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+         .wy-nav-content { max-width: none; }
+  </style>
+
+
+
+</body>
+</html>

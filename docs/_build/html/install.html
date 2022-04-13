@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installing GOFit &mdash; GOFit 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Example Usage" href="example.html" />
+    <link rel="prev" title="GOFit" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> GOFit
+            <img src="_static/stfc-logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installing GOFit</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Installing GOFit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-gofit-from-source">Installing GOFit from source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testing">Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#uninstallation">Uninstallation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bugs">Bugs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#license">License</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="example.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms.html">GOFit Algorithms</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">GOFit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Installing GOFit</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/install.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="installing-gofit">
+<h1>Installing GOFit<a class="headerlink" href="#installing-gofit" title="Permalink to this headline"></a></h1>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline"></a></h2>
+<p>GOFit provides pre-built <a class="reference external" href="https://realpython.com/python-wheels/">Python wheels</a> for most common platforms with all dependencies included. However if a wheel does not exist for your platform (or if building from source), GOFit requires the following software to be installed:</p>
+<ul class="simple">
+<li><p>PyBind11 2.9.1 or above (<a class="reference external" href="https://pybind11.readthedocs.io/">https://pybind11.readthedocs.io/</a>)</p></li>
+<li><p>Eigen 3.4 or above (<a class="reference external" href="https://eigen.tuxfamily.org/">https://eigen.tuxfamily.org/</a>)</p></li>
+<li><p>CMake 3.15 or above (<a class="reference external" href="https://cmake.org/">https://cmake.org/</a>)</p></li>
+</ul>
+</section>
+<section id="id1">
+<h2>Installing GOFit<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h2>
+<p>For easy installation, use <a class="reference external" href="http://www.pip-installer.org/">pip</a>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install gofit
+</pre></div>
+</div>
+<p>Note that if an older install of GOFit is present on your system you can use:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install --upgrade gofit
+</pre></div>
+</div>
+<p>to upgrade GOFit to the latest version.</p>
+</section>
+<section id="installing-gofit-from-source">
+<h2>Installing GOFit from source<a class="headerlink" href="#installing-gofit-from-source" title="Permalink to this headline"></a></h2>
+<p>Alternatively, you can download the source code from <a class="reference external" href="https://github.com/ralna/gofit">Github</a> and unpack as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/ralna/gofit
+$ <span class="nb">cd</span> gofit
+</pre></div>
+</div>
+<p>GOFit can then be compiled and installed using:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install .
+</pre></div>
+</div>
+<p><strong>Please Note:</strong> <em>don’t forget to install the required dependencies (see above).</em></p>
+<p>To upgrade GOFit to the latest version, navigate to the top-level directory (i.e. the one containing <code class="docutils literal notranslate"><span class="pre">setup.py</span></code>) and re-run the installation using <code class="docutils literal notranslate"><span class="pre">pip</span></code>, as above:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git pull
+$ pip install .
+</pre></div>
+</div>
+</section>
+<section id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline"></a></h2>
+<p>The <a class="reference external" href="https://ralna.github.io/gofit/">documentation</a> provides some simple examples of how to run GOFit.</p>
+</section>
+<section id="uninstallation">
+<h2>Uninstallation<a class="headerlink" href="#uninstallation" title="Permalink to this headline"></a></h2>
+<p>You can uninstall GOFit as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip uninstall gofit
+</pre></div>
+</div>
+</section>
+<section id="bugs">
+<h2>Bugs<a class="headerlink" href="#bugs" title="Permalink to this headline"></a></h2>
+<p>Please report any bugs using GitHub’s issue tracker.</p>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline"></a></h2>
+<p>This software is released under the New BSD license.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="GOFit" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="example.html" class="btn btn-neutral float-right" title="Example Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022 The Science and Technology Facilities Council (STFC).</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+         .wy-nav-content { max-width: none; }
+  </style>
+
+
+
+</body>
+</html>
