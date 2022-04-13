@@ -1,0 +1,38 @@
+name: Tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9"]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      # install Eigen from source as we need latest 3.4 version with CMake targets
+      # install pybind11 with global option so CMake targets are present
+      run: |
+        wget https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz
+        tar xzf eigen-3.4.0.tar.gz && cd eigen-3.4.0
+        mkdir build && cd build && cmake .. && sudo make install && cd ../..
+        pip install pybind11[global]
+        pip install .
+    - name: Tests
+      run: |
+        python tests/test_regularisation.py
+        python tests/test_alternating.py
+        python tests/test_multistart.py
+        python tests/test_multistart_ls.py
