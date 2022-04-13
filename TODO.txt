@@ -1,8 +1,4 @@
 GOFit TODO
 ==========
 
-- Add good tests and setup Github Actions ymls
-
 - Pre-build wheels for Linux, Windows and Mac using Github Actions
-
-- Write good Sphinx documentation and host on Github pages
