@@ -32,6 +32,7 @@ jobs:
         pip install .
     - name: Tests
       run: |
+        pip install numpy --only-binary=numpy
         python tests/test_regularisation.py
         python tests/test_alternating.py
         python tests/test_multistart.py
