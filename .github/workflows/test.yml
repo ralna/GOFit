@@ -22,13 +22,10 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
-      # install Eigen from source as we need latest 3.4 version with CMake targets
-      # install pybind11 with global option so CMake targets are present
+      # install Eigen using Homebrew as we need >= v3.4 with CMake targets
+      # install pybind11 using Homebrew so that CMake targets are present
       run: |
-        wget https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz
-        tar xzf eigen-3.4.0.tar.gz && cd eigen-3.4.0
-        mkdir build && cd build && cmake .. && sudo make install && cd ../..
-        pip install pybind11[global]
+        brew install eigen pybind11
         pip install .
     - name: Tests
       run: |
