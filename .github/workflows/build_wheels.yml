@@ -48,7 +48,7 @@ jobs:
           CIBW_TEST_REQUIRES: numpy
 
           # Run tests
-          CIBW_TEST_COMMAND: cd tests && python test_multistart_ls.py
+          CIBW_TEST_COMMAND: python {project}/tests/test_multistart.py
 
       - uses: actions/upload-artifact@v2
         with:
