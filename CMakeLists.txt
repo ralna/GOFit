@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15...3.19)
+cmake_minimum_required(VERSION 3.18...3.19)
 project(gofit LANGUAGES CXX)
 
 # Set C++ 17 Standard
@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Find python and pybind11
-find_package(Python COMPONENTS Interpreter Development REQUIRED)
+find_package(Python COMPONENTS Interpreter Development.Module REQUIRED)
 find_package(pybind11 CONFIG REQUIRED)
 
 # Find Eigen 3.4+

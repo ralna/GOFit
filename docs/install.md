@@ -7,7 +7,7 @@ GOFit provides pre-built [Python wheels](https://realpython.com/python-wheels/) 
 
 * PyBind11 2.9.1 or above (<https://pybind11.readthedocs.io/>)
 * Eigen 3.4 or above (<https://eigen.tuxfamily.org/>)
-* CMake 3.15 or above (<https://cmake.org/>)
+* CMake 3.18 or above (<https://cmake.org/>)
 
 Installing GOFit
 ----------------
