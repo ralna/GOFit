@@ -29,11 +29,23 @@ jobs:
         env:
           # List of platforms to build on
           CIBW_BUILD: cp39-manylinux_x86_64 cp39-macosx_x86_64
+
           # Install Eigen and pybind11
+          CIBW_BEFORE_ALL_LINUX: >
+            wget https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz &&
+            tar xzf eigen-3.4.0.tar.gz &&
+            cd eigen-3.4.0 &&
+            mkdir build &&
+            cd build &&
+            cmake .. &&
+            sudo make install &&
+            cd ../..
+          CIBW_BEFORE_BUILD_LINUX: pip install pybind11[global]
           CIBW_BEFORE_ALL_MACOS: brew install eigen pybind11
-          CIBW_BEFORE_ALL_LINUX: brew install eigen pybind11
+
           # Install test dependencies
           CIBW_TEST_REQUIRES: numpy
+
           # Run tests
           CIBW_TEST_COMMAND: cd tests && python test_multistart_ls.py
 
