@@ -43,6 +43,15 @@ jobs:
             cd ../..
           CIBW_BEFORE_BUILD_LINUX: pip install pybind11[global]
           CIBW_BEFORE_ALL_MACOS: brew install eigen pybind11
+          CIBW_BEFORE_ALL_WINDOWS: >
+            wget https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz &&
+            tar xzf eigen-3.4.0.tar.gz &&
+            cd eigen-3.4.0 &&
+            mkdir build &&
+            cd build &&
+            cmake .. &&
+            make install &&
+            cd ../..
           CIBW_BEFORE_BUILD_WINDOWS: pip install pybind11[global]
 
           # Install test dependencies
