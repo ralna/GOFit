@@ -56,10 +56,10 @@ jobs:
           CIBW_BEFORE_BUILD_WINDOWS: pip install pybind11[global]
 
           # Install test dependencies
-          CIBW_TEST_REQUIRES: numpy
+          #CIBW_TEST_REQUIRES: numpy
 
           # Run tests
-          CIBW_TEST_COMMAND: python {project}/tests/test_multistart.py
+          #CIBW_TEST_COMMAND: python {project}/tests/test_multistart.py
 
       - uses: actions/upload-artifact@v2
         with:
