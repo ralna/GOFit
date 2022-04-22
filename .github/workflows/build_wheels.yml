@@ -16,7 +16,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-18.04, macos-10.15, windows-2019]
+        # Note: builds on these are backward compatible
+        # (Linux builds use manylinux Docker containers)
+        # (macOS builds target old versions by default)
+        os: [ubuntu-20.04, macos-11, windows-2019]
 
     steps:
       - uses: actions/checkout@v2
@@ -30,7 +33,7 @@ jobs:
           # List of platforms to build on
           CIBW_BUILD: cp38-manylinux_x86_64 cp38-macosx_x86_64 cp38-win_amd64
 
-          # Install Eigen and pybind11
+          # Install Eigen and pybind11 on manylinux images (no brew, need Eigen >= 3.4)
           CIBW_BEFORE_ALL_LINUX: >
             yum install -y wget &&
             wget https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz &&
@@ -42,7 +45,11 @@ jobs:
             make install &&
             cd ../..
           CIBW_BEFORE_BUILD_LINUX: pip install pybind11[global]
+
+          # Install Eigen and pybind11 on macOS
           CIBW_BEFORE_ALL_MACOS: brew install eigen pybind11
+
+          # Install Eigen and pybind11 on Windows (need Eigen >= 3.4, not yet in choco)
           CIBW_BEFORE_ALL_WINDOWS: >
             choco install wget --no-progress &&
             wget https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz &&
@@ -53,13 +60,18 @@ jobs:
             cmake .. &&
             cmake --build . --target INSTALL &&
             cd ../..
-          CIBW_BEFORE_BUILD_WINDOWS: pip install pybind11[global]
+          # Fix broken EIGEN3_INCLUDE_DIR on Windows
+          CIBW_ENVIRONMENT_WINDOWS: EIGEN3_INCLUDE_DIR="C:\\Program Files (x86)\\Eigen3\\include\\eigen3\\"
+          CIBW_BEFORE_BUILD_WINDOWS: pip install pybind11[global] delvewheel
+
+          # cibuildwheel doesn't yet ship a default repair command for Windows
+          CIBW_REPAIR_WHEEL_COMMAND_WINDOWS: "delvewheel repair -w {dest_dir} {wheel}"
 
           # Install test dependencies
-          #CIBW_TEST_REQUIRES: numpy
+          CIBW_TEST_REQUIRES: numpy
 
           # Run tests
-          #CIBW_TEST_COMMAND: python {project}/tests/test_multistart.py
+          CIBW_TEST_COMMAND: python {project}/tests/test_multistart.py
 
       - uses: actions/upload-artifact@v2
         with:
