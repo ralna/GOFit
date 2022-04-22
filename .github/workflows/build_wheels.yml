@@ -61,6 +61,7 @@ jobs:
             cmake --build . --target INSTALL &&
             cd ../.. &&
             set EIGEN3_INCLUDE_DIR="C:/Program Files (x86)/Eigen3/include/eigen3"
+          CIBW_ENVIRONMENT_WINDOWS: EIGEN3_INCLUDE_DIR="C:/Program Files (x86)/Eigen3/include/eigen3"
           CIBW_BEFORE_BUILD_WINDOWS: pip install pybind11[global] delvewheel
 
           # cibuildwheel doesn't yet ship a default repair command for Windows
