@@ -58,7 +58,7 @@ jobs:
           CIBW_REPAIR_WHEEL_COMMAND_WINDOWS: "delvewheel repair -w {dest_dir} {wheel}"
 
           # Install test dependencies and run tests
-          CIBW_TEST_SKIP: "cp38-macosx_x86_64" # skip due to broken cibuildwheel
+          CIBW_TEST_SKIP: "cp38-macosx_x86_64 cp38-win_amd64" # skip due to broken cibuildwheel
           CIBW_TEST_REQUIRES: numpy
           CIBW_TEST_COMMAND: python {project}/tests/test_multistart.py
 
