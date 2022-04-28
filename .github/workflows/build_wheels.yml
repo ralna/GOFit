@@ -49,19 +49,9 @@ jobs:
           # Install Eigen and pybind11 on macOS
           CIBW_BEFORE_ALL_MACOS: brew install eigen pybind11
 
-          # Install Eigen and pybind11 on Windows (need Eigen >= 3.4, not yet in choco)
-          CIBW_BEFORE_ALL_WINDOWS: >
-            choco install wget --no-progress &&
-            wget https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz &&
-            tar xzf eigen-3.4.0.tar.gz &&
-            cd eigen-3.4.0 &&
-            md build &&
-            cd build &&
-            cmake .. &&
-            cmake --build . --target INSTALL &&
-            cd ../.. &&
-            set EIGEN3_INCLUDE_DIR="C:/Program Files (x86)/Eigen3/include/eigen3"
-          CIBW_ENVIRONMENT_WINDOWS: EIGEN3_INCLUDE_DIR="C:/Program Files (x86)/Eigen3/include/eigen3"
+          # Install Eigen and pybind11 on Windows
+          CIBW_BEFORE_ALL_WINDOWS: choco install eigen
+          #CIBW_ENVIRONMENT_WINDOWS: EIGEN3_INCLUDE_DIR="C:/Program Files (x86)/Eigen3/include/eigen3"
           CIBW_BEFORE_BUILD_WINDOWS: pip install pybind11[global] delvewheel
 
           # cibuildwheel doesn't yet ship a default repair command for Windows
