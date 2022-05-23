@@ -119,7 +119,7 @@ class CMakeBuild(build_ext):
 # logic and declaration, and simpler if you include description/version in a file.
 setup(
     name="gofit",
-    version="0.1",
+    version="0.2",
     description="GOFit: Global Optimization for Fitting problems",
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
@@ -129,7 +129,7 @@ setup(
     license='New BSD',
     keywords = "mathematics optimization",
     classifiers=[
-        'Development Status :: 5 - Production/Stable',
+        'Development Status :: 4 - Beta',
         'Environment :: Console',
         'Framework :: IPython',
         'Framework :: Jupyter',

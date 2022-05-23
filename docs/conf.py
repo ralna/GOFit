@@ -22,13 +22,13 @@ copyright = '2022 The Science and Technology Facilities Council (STFC)'
 author = 'Jaroslav Fowkes'
 
 # The full version, including alpha/beta/rc tags
-release = '0.1'
+release = '0.2'
 # The short X.Y version
 version = release
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
-today = '14 April 2022'
+today = '23 May 2022'
 # Else, today_fmt is used as the format for a strftime call.
 #today_fmt = '%d %B %Y'
 
