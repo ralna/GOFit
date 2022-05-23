@@ -25,13 +25,13 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.4.0
+        uses: pypa/cibuildwheel@v2.5.0
         # to supply options, put them in 'env', like:
         # env:
         #   CIBW_SOME_OPTION: value
         env:
           # List of platforms to build on
-          CIBW_BUILD: cp38-manylinux_x86_64 cp38-macosx_x86_64 cp38-win_amd64
+          CIBW_BUILD: cp3{8,9,10}-manylinux_x86_64 cp3{8,9,10}-macosx_x86_64 cp3{8,9,10}-macosx_arm64 cp3{8,9,10}-win_amd64
 
           # Install Eigen and pybind11 on manylinux images (no brew, need Eigen >= 3.4)
           CIBW_BEFORE_ALL_LINUX: >
@@ -51,14 +51,13 @@ jobs:
 
           # Install Eigen and pybind11 on Windows
           CIBW_BEFORE_ALL_WINDOWS: choco install eigen
-          #CIBW_ENVIRONMENT_WINDOWS: EIGEN3_INCLUDE_DIR="C:/Program Files (x86)/Eigen3/include/eigen3"
           CIBW_BEFORE_BUILD_WINDOWS: pip install pybind11[global] delvewheel
 
           # cibuildwheel doesn't yet ship a default repair command for Windows
           CIBW_REPAIR_WHEEL_COMMAND_WINDOWS: "delvewheel repair -w {dest_dir} {wheel}"
 
           # Install test dependencies and run tests
-          CIBW_TEST_SKIP: "cp38-macosx_x86_64 cp38-win_amd64" # skip due to broken cibuildwheel
+          CIBW_TEST_SKIP: "cp38-macosx_x86_64 cp38-macosx_arm64 cp38-win_amd64" # skip due to broken cibuildwheel
           CIBW_TEST_REQUIRES: numpy
           CIBW_TEST_COMMAND: python {project}/tests/test_multistart.py
 
