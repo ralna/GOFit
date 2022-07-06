@@ -126,6 +126,12 @@ setup(
     author="Jaroslav Fowkes",
     author_email="jaroslav.fowkes@stfc.ac.uk",
     url="https://github.com/ralna/gofit",
+    download_url="https://github.com/ralna/gofit/releases/",
+    project_urls={
+        "Bug Tracker": "https://github.com/ralna/gofit/issues/",
+        "Documentation": "https://ralna.github.io/GOFit/",
+        "Source Code": "https://github.com/ralna/gofit/",
+    },
     license='New BSD',
     keywords = "mathematics optimization",
     classifiers=[
