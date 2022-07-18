@@ -94,13 +94,13 @@
 <li><p><strong>xl</strong> (<em>numpy.ndarray</em>) – lower bounds of the parameters to optimize</p></li>
 <li><p><strong>xu</strong> (<em>numpy.ndarray</em>) – upper bounds of the parameters to optimize</p></li>
 <li><p><strong>res</strong> (<em>callable</em>) – function that evaluates the residual, must have the signature <code class="docutils literal notranslate"><span class="pre">r</span> <span class="pre">=</span> <span class="pre">res(x)</span></code> where <code class="docutils literal notranslate"><span class="pre">r</span></code> is the residual (a <em>numpy.ndarray</em> of size <em>m</em>) evaluated at <code class="docutils literal notranslate"><span class="pre">x</span></code> (a <em>numpy.ndarray</em> of size <em>n</em>)</p></li>
-<li><p><strong>jac</strong> (<em>None</em><em> or </em><em>callable</em>) – optional function that evaluates the Jacobian, must have the signature <code class="docutils literal notranslate"><span class="pre">J</span> <span class="pre">=</span> <span class="pre">jac(x)</span></code> where <code class="docutils literal notranslate"><span class="pre">J</span></code> is the Jacobian (a <em>numpy.ndarray</em> of size <em>(m,n)</em>) of the residual evaluated at <code class="docutils literal notranslate"><span class="pre">x</span></code> (a <em>numpy.ndarray</em> of size <em>n</em>). If not given computes the Jacobian using finite-differences</p></li>
-<li><p><strong>samples</strong> (<em>int</em>) – number of Latin Hypercube starting points for the local solver</p></li>
-<li><p><strong>maxit</strong> (<em>int</em>) – maximum number of iterations for each local solver run</p></li>
-<li><p><strong>eps_r</strong> (<em>float</em>) – residual stopping tolerance</p></li>
-<li><p><strong>eps_g</strong> (<em>float</em>) – norm of gradient stopping tolerance</p></li>
-<li><p><strong>eps_s</strong> (<em>float</em>) – norm of step stopping tolerance</p></li>
-<li><p><strong>scaling</strong> (<em>bool</em>) – whether to scale the optimization parameters (recommended)</p></li>
+<li><p><strong>jac</strong> (<em>None</em><em> or </em><em>callable</em><em>, </em><em>optional</em>) – optional function that evaluates the Jacobian, must have the signature <code class="docutils literal notranslate"><span class="pre">J</span> <span class="pre">=</span> <span class="pre">jac(x)</span></code> where <code class="docutils literal notranslate"><span class="pre">J</span></code> is the Jacobian (a <em>numpy.ndarray</em> of size <em>(m,n)</em>) of the residual evaluated at <code class="docutils literal notranslate"><span class="pre">x</span></code> (a <em>numpy.ndarray</em> of size <em>n</em>). If not given computes the Jacobian using finite-differences</p></li>
+<li><p><strong>samples</strong> (<em>int</em><em>, </em><em>optional</em>) – number of Latin Hypercube starting points for the local solver</p></li>
+<li><p><strong>maxit</strong> (<em>int</em><em>, </em><em>optional</em>) – maximum number of iterations for each local solver run</p></li>
+<li><p><strong>eps_r</strong> (<em>float</em><em>, </em><em>optional</em>) – residual stopping tolerance</p></li>
+<li><p><strong>eps_g</strong> (<em>float</em><em>, </em><em>optional</em>) – norm of gradient stopping tolerance</p></li>
+<li><p><strong>eps_s</strong> (<em>float</em><em>, </em><em>optional</em>) – norm of step stopping tolerance</p></li>
+<li><p><strong>scaling</strong> (<em>bool</em><em>, </em><em>optional</em>) – whether to scale the optimization parameters (recommended)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -118,7 +118,7 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="gofit.alternating">
 <span class="sig-prename descclassname"><span class="pre">gofit.</span></span><span class="sig-name descname"><span class="pre">alternating</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">m,</span> <span class="pre">n,</span> <span class="pre">n_split,</span> <span class="pre">x0,</span> <span class="pre">xl,</span> <span class="pre">xu,</span> <span class="pre">res</span> <span class="pre">[,</span> <span class="pre">samples=100,</span> <span class="pre">maxit=200,</span> <span class="pre">eps_r=1e-05,</span> <span class="pre">eps_g=1e-04,</span> <span class="pre">eps_s=1e-08])</span> <span class="pre">-&gt;</span> <span class="pre">(x,</span> <span class="pre">status</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gofit.alternating" title="Permalink to this definition"></a></dt>
-<dd><p>Alternating multistart global optimization algorithm. Assumes the parameters split into <code class="docutils literal notranslate"><span class="pre">n_split</span></code> model parameters and <code class="docutils literal notranslate"><span class="pre">n-n_split</span></code> shape parameters. Then proceeds as follows: 1. fix initial shape params, globally optimize model params; 2. fix model params, locally optimize shape params; 3. locally optimize over model params again; 4. locally optimize over shape params again.</p>
+<dd><p>Alternating multistart global optimization algorithm. Assumes the parameters split into <code class="docutils literal notranslate"><span class="pre">n_split</span></code> model parameters and <code class="docutils literal notranslate"><span class="pre">n-n_split</span></code> shape parameters. Then proceeds as follows: 1. fix initial shape params, globally optimize model params; 2. fix model params, locally optimize shape params; 3. locally optimize over model params again; 4. locally optimize over shape params again. Please note that the optimization parameters are scaled by default.</p>
 <dl class="myst field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -129,12 +129,11 @@
 <li><p><strong>xl</strong> (<em>numpy.ndarray</em>) – lower bounds of the parameters to optimize</p></li>
 <li><p><strong>xu</strong> (<em>numpy.ndarray</em>) – upper bounds of the parameters to optimize</p></li>
 <li><p><strong>res</strong> (<em>callable</em>) – function that evaluates the residual, must have the signature <code class="docutils literal notranslate"><span class="pre">r</span> <span class="pre">=</span> <span class="pre">res(x)</span></code> where <code class="docutils literal notranslate"><span class="pre">r</span></code> is the residual (a <em>numpy.ndarray</em> of size <em>m</em>) evaluated at <code class="docutils literal notranslate"><span class="pre">x</span></code> (a <em>numpy.ndarray</em> of size <em>n</em>)</p></li>
-<li><p><strong>samples</strong> (<em>int</em>) – number of Latin Hypercube starting points for the local solver</p></li>
-<li><p><strong>maxit</strong> (<em>int</em>) – maximum number of iterations for each local solver run</p></li>
-<li><p><strong>eps_r</strong> (<em>float</em>) – residual stopping tolerance</p></li>
-<li><p><strong>eps_g</strong> (<em>float</em>) – norm of gradient stopping tolerance</p></li>
-<li><p><strong>eps_s</strong> (<em>float</em>) – norm of step stopping tolerance</p></li>
-<li><p><strong>scaling</strong> (<em>bool</em>) – whether to scale the optimization parameters (recommended)</p></li>
+<li><p><strong>samples</strong> (<em>int</em><em>, </em><em>optional</em>) – number of Latin Hypercube starting points for the local solver</p></li>
+<li><p><strong>maxit</strong> (<em>int</em><em>, </em><em>optional</em>) – maximum number of iterations for each local solver run</p></li>
+<li><p><strong>eps_r</strong> (<em>float</em><em>, </em><em>optional</em>) – residual stopping tolerance</p></li>
+<li><p><strong>eps_g</strong> (<em>float</em><em>, </em><em>optional</em>) – norm of gradient stopping tolerance</p></li>
+<li><p><strong>eps_s</strong> (<em>float</em><em>, </em><em>optional</em>) – norm of step stopping tolerance</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -160,10 +159,10 @@
 <li><p><strong>n</strong> (<em>int</em>) – number of parameters (dimension of the problem)</p></li>
 <li><p><strong>x0</strong> (<em>numpy.ndarray</em>) – initial guess for the parameters</p></li>
 <li><p><strong>res</strong> (<em>callable</em>) – function that evaluates the residual, must have the signature <code class="docutils literal notranslate"><span class="pre">r</span> <span class="pre">=</span> <span class="pre">res(x)</span></code> where <code class="docutils literal notranslate"><span class="pre">r</span></code> is the residual (a <em>numpy.ndarray</em> of size <em>m</em>) evaluated at <code class="docutils literal notranslate"><span class="pre">x</span></code> (a <em>numpy.ndarray</em> of size <em>n</em>)</p></li>
-<li><p><strong>jac</strong> (<em>None</em><em> or </em><em>callable</em>) – optional function that evaluates the Jacobian, must have the signature <code class="docutils literal notranslate"><span class="pre">J</span> <span class="pre">=</span> <span class="pre">jac(x)</span></code> where <code class="docutils literal notranslate"><span class="pre">J</span></code> is the Jacobian (a <em>numpy.ndarray</em> of size <em>(m,n)</em>) of the residual evaluated at <code class="docutils literal notranslate"><span class="pre">x</span></code> (a <em>numpy.ndarray</em> of size <em>n</em>). If not given computes the Jacobian using finite-differences</p></li>
-<li><p><strong>maxit</strong> (<em>int</em>) – maximum number of iterations for each local solver run</p></li>
-<li><p><strong>eps_g</strong> (<em>float</em>) – norm of gradient stopping tolerance</p></li>
-<li><p><strong>eps_s</strong> (<em>float</em>) – norm of step stopping tolerance</p></li>
+<li><p><strong>jac</strong> (<em>None</em><em> or </em><em>callable</em><em>, </em><em>optional</em>) – optional function that evaluates the Jacobian, must have the signature <code class="docutils literal notranslate"><span class="pre">J</span> <span class="pre">=</span> <span class="pre">jac(x)</span></code> where <code class="docutils literal notranslate"><span class="pre">J</span></code> is the Jacobian (a <em>numpy.ndarray</em> of size <em>(m,n)</em>) of the residual evaluated at <code class="docutils literal notranslate"><span class="pre">x</span></code> (a <em>numpy.ndarray</em> of size <em>n</em>). If not given computes the Jacobian using finite-differences</p></li>
+<li><p><strong>maxit</strong> (<em>int</em><em>, </em><em>optional</em>) – maximum number of iterations for each local solver run</p></li>
+<li><p><strong>eps_g</strong> (<em>float</em><em>, </em><em>optional</em>) – norm of gradient stopping tolerance</p></li>
+<li><p><strong>eps_s</strong> (<em>float</em><em>, </em><em>optional</em>) – norm of step stopping tolerance</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
