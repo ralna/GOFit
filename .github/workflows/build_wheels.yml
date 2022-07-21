@@ -19,7 +19,7 @@ jobs:
         # Note: builds on these are backward compatible
         # (Linux builds use manylinux Docker containers)
         # (macOS builds target old versions by default)
-        os: [ubuntu-20.04, macos-10.15, windows-2019]
+        os: [ubuntu-20.04, macos-11, windows-2019]
 
     steps:
       - uses: actions/checkout@v3
