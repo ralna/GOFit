@@ -8,7 +8,7 @@ GOFit: Global Optimization for Fitting problems
 
 GOFit is a package of C++ algorithms with python interfaces designed for the global optimization of parameters in curve fitting, i.e. for nonlinear least-squares problems arising from curve fitting. GOFit was developed with scientific curve fitting problems in mind but is also applicable to general curve fitting problems provided they can be formulated as nonlinear least-squares problems.
 
-Full details on how to use GOFit are available in the [documentation](https://ralna.github.io/gofit/).
+Full details on how to use GOFit are available in the [documentation](https://ralna.github.io/GOFit/).
 
 Requirements
 ------------
@@ -60,7 +60,7 @@ $ pip install .
 
 Testing
 -------
-The [documentation](https://ralna.github.io/gofit/) provides some simple examples of how to run GOFit.
+The [documentation](https://ralna.github.io/GOFit/) provides some simple examples of how to run GOFit.
 
 Uninstallation
 --------------
