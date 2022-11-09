@@ -22,9 +22,11 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
+      # add Homebrew to PATH (now a requirement)
       # install Eigen using Homebrew as we need >= v3.4 with CMake targets
       # install pybind11 using Homebrew so that CMake targets are present
       run: |
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
         brew install eigen pybind11
         pip install .
     - name: Tests
