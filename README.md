@@ -1,6 +1,6 @@
 
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
-[![Build Status](https://img.shields.io/github/workflow/status/ralna/gofit/Tests)](https://github.com/ralna/gofit/actions/workflows/test.yml)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/ralna/gofit/test.yml?branch=master)](https://github.com/ralna/gofit/actions/workflows/test.yml)
 [![PyPI Version](https://img.shields.io/pypi/v/gofit.svg)](https://pypi.python.org/pypi/gofit)
 
 GOFit: Global Optimization for Fitting problems
