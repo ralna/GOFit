@@ -1,4 +1,0 @@
-GOFit TODO
-==========
-
-- Pre-build wheels for Linux, Windows and Mac using Github Actions
