@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GOFit Algorithms &mdash; GOFit 0.3 documentation</title>
+  <title>GOFit Algorithms &mdash; GOFit 0.4 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -27,15 +27,19 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> GOFit
-            <img src="_static/stfc-logo.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            GOFit
+              <img src="_static/stfc-logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.3
+                0.4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -46,9 +50,18 @@
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installing GOFit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="example.html">Example Usage</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">GOFit Algorithms</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#multistart-algorithm">Multistart Algorithm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#alternating-algorithm">Alternating Algorithm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#regularisation-algorithm">Regularisation Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#multistart-algorithm">Multistart Algorithm</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gofit.multistart"><code class="docutils literal notranslate"><span class="pre">gofit.multistart()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#alternating-algorithm">Alternating Algorithm</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gofit.alternating"><code class="docutils literal notranslate"><span class="pre">gofit.alternating()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#regularisation-algorithm">Regularisation Algorithm</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gofit.regularisation"><code class="docutils literal notranslate"><span class="pre">gofit.regularisation()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -66,8 +79,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>GOFit Algorithms</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">GOFit Algorithms</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/algorithms.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -87,7 +100,7 @@
 <span class="sig-prename descclassname"><span class="pre">gofit.</span></span><span class="sig-name descname"><span class="pre">multistart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">m,</span> <span class="pre">n,</span> <span class="pre">xl,</span> <span class="pre">xu,</span> <span class="pre">res</span> <span class="pre">[,</span> <span class="pre">jac=None,</span> <span class="pre">samples=100,</span> <span class="pre">maxit=200,</span> <span class="pre">eps_r=1e-05,</span> <span class="pre">eps_g=1e-04,</span> <span class="pre">eps_s=1e-08,</span> <span class="pre">scaling=True])</span> <span class="pre">-&gt;</span> <span class="pre">(x,</span> <span class="pre">status</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gofit.multistart" title="Permalink to this definition"></a></dt>
 <dd><p>Multistart global optimization algorithm. Starts multiple regularisation local optimization algorithms from a given number of randomly generated Latin Hypercube starting points.</p>
 <dl class="myst field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>m</strong> (<em>int</em>) – number of residuals (number of data points)</p></li>
 <li><p><strong>n</strong> (<em>int</em>) – number of parameters (dimension of the problem)</p></li>
@@ -103,10 +116,10 @@
 <li><p><strong>scaling</strong> (<em>bool</em><em>, </em><em>optional</em>) – whether to scale the optimization parameters (recommended)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>optimal parameters, status code</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>(<em>numpy.ndarray</em>,<em>int</em>)</p>
 </dd>
 </dl>
@@ -120,7 +133,7 @@
 <span class="sig-prename descclassname"><span class="pre">gofit.</span></span><span class="sig-name descname"><span class="pre">alternating</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">m,</span> <span class="pre">n,</span> <span class="pre">n_split,</span> <span class="pre">x0,</span> <span class="pre">xl,</span> <span class="pre">xu,</span> <span class="pre">res</span> <span class="pre">[,</span> <span class="pre">samples=100,</span> <span class="pre">maxit=200,</span> <span class="pre">eps_r=1e-05,</span> <span class="pre">eps_g=1e-04,</span> <span class="pre">eps_s=1e-08])</span> <span class="pre">-&gt;</span> <span class="pre">(x,</span> <span class="pre">status</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gofit.alternating" title="Permalink to this definition"></a></dt>
 <dd><p>Alternating multistart global optimization algorithm. Assumes the parameters split into <code class="docutils literal notranslate"><span class="pre">n_split</span></code> model parameters and <code class="docutils literal notranslate"><span class="pre">n-n_split</span></code> shape parameters. Then proceeds as follows: 1. fix initial shape params, globally optimize model params; 2. fix model params, locally optimize shape params; 3. locally optimize over model params again; 4. locally optimize over shape params again. Please note that the optimization parameters are scaled by default.</p>
 <dl class="myst field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>m</strong> (<em>int</em>) – number of residuals (number of data points)</p></li>
 <li><p><strong>n</strong> (<em>int</em>) – number of parameters (dimension of the problem)</p></li>
@@ -136,10 +149,10 @@
 <li><p><strong>eps_s</strong> (<em>float</em><em>, </em><em>optional</em>) – norm of step stopping tolerance</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>optimal parameters, status code</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>(<em>numpy.ndarray</em>,<em>int</em>)</p>
 </dd>
 </dl>
@@ -153,7 +166,7 @@
 <span class="sig-prename descclassname"><span class="pre">gofit.</span></span><span class="sig-name descname"><span class="pre">regularisation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">m,</span> <span class="pre">n,</span> <span class="pre">x,</span> <span class="pre">res</span> <span class="pre">[,</span> <span class="pre">jac=None,</span> <span class="pre">maxit=200,</span> <span class="pre">eps_g=1e-04,</span> <span class="pre">eps_s=1e-08])</span> <span class="pre">-&gt;</span> <span class="pre">(x,</span> <span class="pre">status</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gofit.regularisation" title="Permalink to this definition"></a></dt>
 <dd><p>Adaptive quadratic regularisation local optimization algorithm. Included for completeness.</p>
 <dl class="myst field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>m</strong> (<em>int</em>) – number of residuals (number of data points)</p></li>
 <li><p><strong>n</strong> (<em>int</em>) – number of parameters (dimension of the problem)</p></li>
@@ -165,10 +178,10 @@
 <li><p><strong>eps_s</strong> (<em>float</em><em>, </em><em>optional</em>) – norm of step stopping tolerance</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>optimal parameters, status code</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>(<em>numpy.ndarray</em>,<em>int</em>)</p>
 </dd>
 </dl>
