@@ -149,6 +149,7 @@ setup(
         ],
     ext_modules=[CMakeExtension("gofit")],
     cmdclass={"build_ext": CMakeBuild},
+    install_requires=["pybind11[global]"],
     python_requires=">=3.6",
     zip_safe=False,
 )
