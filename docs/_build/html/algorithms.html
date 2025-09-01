@@ -1,21 +1,21 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GOFit Algorithms &mdash; GOFit 0.4 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>GOFit Algorithms &mdash; GOFit 0.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=db78e746"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -34,9 +34,6 @@
             GOFit
               <img src="_static/stfc-logo.png" class="logo" alt="Logo"/>
           </a>
-              <div class="version">
-                0.4
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -91,13 +88,13 @@
            <div itemprop="articleBody">
              
   <section id="gofit-algorithms">
-<h1>GOFit Algorithms<a class="headerlink" href="#gofit-algorithms" title="Permalink to this heading"></a></h1>
+<h1>GOFit Algorithms<a class="headerlink" href="#gofit-algorithms" title="Link to this heading"></a></h1>
 <p>The GOFit module contains the following three optimization algorithms for parameter fitting nonlinear least-squares problems. The first two are global optimization algorithms and the third is an interface to the local optimization algorithm that is used within the global algorithms. Note that all algorithms expect numpy arrays for vector and matrix inputs.</p>
 <section id="multistart-algorithm">
-<h2>Multistart Algorithm<a class="headerlink" href="#multistart-algorithm" title="Permalink to this heading"></a></h2>
+<h2>Multistart Algorithm<a class="headerlink" href="#multistart-algorithm" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="gofit.multistart">
-<span class="sig-prename descclassname"><span class="pre">gofit.</span></span><span class="sig-name descname"><span class="pre">multistart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">m,</span> <span class="pre">n,</span> <span class="pre">xl,</span> <span class="pre">xu,</span> <span class="pre">res</span> <span class="pre">[,</span> <span class="pre">jac=None,</span> <span class="pre">samples=100,</span> <span class="pre">maxit=200,</span> <span class="pre">eps_r=1e-05,</span> <span class="pre">eps_g=1e-04,</span> <span class="pre">eps_s=1e-08,</span> <span class="pre">scaling=True])</span> <span class="pre">-&gt;</span> <span class="pre">(x,</span> <span class="pre">status</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gofit.multistart" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">gofit.</span></span><span class="sig-name descname"><span class="pre">multistart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">m,</span> <span class="pre">n,</span> <span class="pre">xl,</span> <span class="pre">xu,</span> <span class="pre">res</span> <span class="pre">[,</span> <span class="pre">jac=None,</span> <span class="pre">samples=100,</span> <span class="pre">maxit=200,</span> <span class="pre">eps_r=1e-05,</span> <span class="pre">eps_g=1e-04,</span> <span class="pre">eps_s=1e-08,</span> <span class="pre">scaling=True])</span> <span class="pre">-&gt;</span> <span class="pre">(x,</span> <span class="pre">status</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gofit.multistart" title="Link to this definition"></a></dt>
 <dd><p>Multistart global optimization algorithm. Starts multiple regularisation local optimization algorithms from a given number of randomly generated Latin Hypercube starting points.</p>
 <dl class="myst field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -127,10 +124,10 @@
 
 </section>
 <section id="alternating-algorithm">
-<h2>Alternating Algorithm<a class="headerlink" href="#alternating-algorithm" title="Permalink to this heading"></a></h2>
+<h2>Alternating Algorithm<a class="headerlink" href="#alternating-algorithm" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="gofit.alternating">
-<span class="sig-prename descclassname"><span class="pre">gofit.</span></span><span class="sig-name descname"><span class="pre">alternating</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">m,</span> <span class="pre">n,</span> <span class="pre">n_split,</span> <span class="pre">x0,</span> <span class="pre">xl,</span> <span class="pre">xu,</span> <span class="pre">res</span> <span class="pre">[,</span> <span class="pre">samples=100,</span> <span class="pre">maxit=200,</span> <span class="pre">eps_r=1e-05,</span> <span class="pre">eps_g=1e-04,</span> <span class="pre">eps_s=1e-08])</span> <span class="pre">-&gt;</span> <span class="pre">(x,</span> <span class="pre">status</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gofit.alternating" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">gofit.</span></span><span class="sig-name descname"><span class="pre">alternating</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">m,</span> <span class="pre">n,</span> <span class="pre">n_split,</span> <span class="pre">x0,</span> <span class="pre">xl,</span> <span class="pre">xu,</span> <span class="pre">res</span> <span class="pre">[,</span> <span class="pre">samples=100,</span> <span class="pre">maxit=200,</span> <span class="pre">eps_r=1e-05,</span> <span class="pre">eps_g=1e-04,</span> <span class="pre">eps_s=1e-08])</span> <span class="pre">-&gt;</span> <span class="pre">(x,</span> <span class="pre">status</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gofit.alternating" title="Link to this definition"></a></dt>
 <dd><p>Alternating multistart global optimization algorithm. Assumes the parameters split into <code class="docutils literal notranslate"><span class="pre">n_split</span></code> model parameters and <code class="docutils literal notranslate"><span class="pre">n-n_split</span></code> shape parameters. Then proceeds as follows: 1. fix initial shape params, globally optimize model params; 2. fix model params, locally optimize shape params; 3. locally optimize over model params again; 4. locally optimize over shape params again. Please note that the optimization parameters are scaled by default.</p>
 <dl class="myst field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -160,10 +157,10 @@
 
 </section>
 <section id="regularisation-algorithm">
-<h2>Regularisation Algorithm<a class="headerlink" href="#regularisation-algorithm" title="Permalink to this heading"></a></h2>
+<h2>Regularisation Algorithm<a class="headerlink" href="#regularisation-algorithm" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="gofit.regularisation">
-<span class="sig-prename descclassname"><span class="pre">gofit.</span></span><span class="sig-name descname"><span class="pre">regularisation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">m,</span> <span class="pre">n,</span> <span class="pre">x,</span> <span class="pre">res</span> <span class="pre">[,</span> <span class="pre">jac=None,</span> <span class="pre">maxit=200,</span> <span class="pre">eps_g=1e-04,</span> <span class="pre">eps_s=1e-08])</span> <span class="pre">-&gt;</span> <span class="pre">(x,</span> <span class="pre">status</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gofit.regularisation" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">gofit.</span></span><span class="sig-name descname"><span class="pre">regularisation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">m,</span> <span class="pre">n,</span> <span class="pre">x,</span> <span class="pre">res</span> <span class="pre">[,</span> <span class="pre">jac=None,</span> <span class="pre">maxit=200,</span> <span class="pre">eps_g=1e-04,</span> <span class="pre">eps_s=1e-08])</span> <span class="pre">-&gt;</span> <span class="pre">(x,</span> <span class="pre">status</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gofit.regularisation" title="Link to this definition"></a></dt>
 <dd><p>Adaptive quadratic regularisation local optimization algorithm. Included for completeness.</p>
 <dl class="myst field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
