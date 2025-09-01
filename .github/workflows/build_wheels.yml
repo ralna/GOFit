@@ -31,7 +31,7 @@ jobs:
         #   CIBW_SOME_OPTION: value
         env:
           # List of platforms to build on
-          CIBW_BUILD: cp3{8,9,10,11,12}-manylinux_x86_64 cp3{8,9,10,11,12}-macosx_x86_64 cp3{8,9,10,11,12}-macosx_arm64 cp3{8,9,10,11,12}-win_amd64
+          CIBW_BUILD: cp3{9,10,11,12,13}-manylinux_x86_64 cp3{9,10,11,12,13}-macosx_x86_64 cp3{9,10,11,12,13}-macosx_arm64 cp3{9,10,11,12,13}-win_amd64
 
           # Install Eigen and pybind11 on manylinux images (no brew, need Eigen >= 3.4)
           CIBW_BEFORE_ALL_LINUX: >
