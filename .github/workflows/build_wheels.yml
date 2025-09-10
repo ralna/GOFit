@@ -17,21 +17,20 @@ jobs:
     strategy:
       matrix:
         # Note: builds on these are backward compatible
-        # (Linux builds use manylinux Docker containers)
-        # (macOS builds target old versions by default)
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        # macos-13 is an intel runner, macos-14 is apple silicon
+        os: [ubuntu-latest, macos-13, macos-14, windows-latest]
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.16.5
+        uses: pypa/cibuildwheel@v2.23.3
         # to supply options, put them in 'env', like:
         # env:
         #   CIBW_SOME_OPTION: value
         env:
           # List of platforms to build on
-          CIBW_BUILD: cp3{9,10,11,12,13}-manylinux_x86_64 cp3{9,10,11,12,13}-macosx_x86_64 cp3{9,10,11,12,13}-macosx_arm64 cp3{9,10,11,12,13}-win_amd64
+          CIBW_BUILD: cp3{10,11,12,13}-manylinux_x86_64 cp3{10,11,12,13}-macosx_x86_64 cp3{10,11,12,13}-macosx_arm64 cp3{10,11,12,13}-win_amd64
 
           # Install Eigen and pybind11 on manylinux images (no brew, need Eigen >= 3.4)
           CIBW_BEFORE_ALL_LINUX: >
