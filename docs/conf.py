@@ -18,17 +18,17 @@
 # -- Project information -----------------------------------------------------
 
 project = 'GOFit'
-copyright = '2022 The Science and Technology Facilities Council (STFC)'
+copyright = '2025 The Science and Technology Facilities Council (STFC)'
 author = 'Jaroslav Fowkes'
 
 # The full version, including alpha/beta/rc tags
-release = '0.5'
+release = '1.0.0'
 # The short X.Y version
 version = release
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
-today = '1 September 2025'
+today = '10 September 2025'
 # Else, today_fmt is used as the format for a strftime call.
 #today_fmt = '%d %B %Y'
 
