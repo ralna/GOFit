@@ -28,8 +28,10 @@ jobs:
       run: |
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
         brew install eigen pybind11
-        export Eigen3_DIR="/home/linuxbrew/.linuxbrew/opt/eigen/share/eigen3/cmake"
-        pip install .
+        export CPLUS_INCLUDE_PATH="/home/linuxbrew/.linuxbrew/opt/eigen/include/eigen3:$CPLUS_INCLUDE_PATH"
+        export CMAKE_PREFIX_PATH="/home/linuxbrew/.linuxbrew/opt/eigen"
+        export CMAKE_ARGS="-DCMAKE_PREFIX_PATH=/home/linuxbrew/.linuxbrew/opt/eigen"
+        pip install . --no-build-isolation
     - name: Tests
       run: |
         pip install numpy --only-binary=numpy
