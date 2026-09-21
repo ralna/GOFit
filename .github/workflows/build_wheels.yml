@@ -28,19 +28,8 @@ jobs:
           # List of platforms to build on
           CIBW_BUILD: cp3{10,11,12,13,14}-manylinux_x86_64 cp3{10,11,12,13,14}-macosx_x86_64 cp3{10,11,12,13,14}-macosx_arm64 cp3{10,11,12,13,14}-win_amd64
 
-          # Install Eigen and pybind11 on manylinux images (no brew, need Eigen >= 3.4)
-          CIBW_BEFORE_ALL_LINUX: >
-            sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* &&
-            sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-* &&
-            yum install -y wget &&
-            wget https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz &&
-            tar xzf eigen-3.4.0.tar.gz &&
-            cd eigen-3.4.0 &&
-            mkdir build &&
-            cd build &&
-            cmake .. &&
-            make install &&
-            cd ../..
+          # Install Eigen and pybind11 on manylinux images
+          CIBW_BEFORE_ALL_LINUX: yum install -y eigen3-devel
           CIBW_BEFORE_BUILD_LINUX: pip install pybind11[global]
 
           # Install Eigen and pybind11 on macOS
