@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.10","3.11","3.12","3.13"]
+        python-version: ["3.10","3.11","3.12","3.13","3.14"]
 
     steps:
     - uses: actions/checkout@v4
@@ -28,6 +28,9 @@ jobs:
       run: |
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
         brew install eigen pybind11
+        export CPLUS_INCLUDE_PATH="/home/linuxbrew/.linuxbrew/opt/eigen/include/eigen3:$CPLUS_INCLUDE_PATH"
+        export CMAKE_PREFIX_PATH="/home/linuxbrew/.linuxbrew/opt/eigen"
+        export CMAKE_ARGS="-DCMAKE_PREFIX_PATH=/home/linuxbrew/.linuxbrew/opt/eigen"
         pip install .
     - name: Tests
       run: |

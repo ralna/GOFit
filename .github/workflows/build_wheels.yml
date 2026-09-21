@@ -14,41 +14,36 @@ jobs:
     strategy:
       matrix:
         # Note: builds on these are backward compatible
-        # macos-13 is an intel runner, macos-14 is apple silicon
-        os: [ubuntu-latest, macos-13, macos-14, windows-latest]
+        os: [ubuntu-latest, macos-15-intel, macos-15, windows-latest]
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.23.3
+        uses: pypa/cibuildwheel@v4.2.1
         # to supply options, put them in 'env', like:
         # env:
         #   CIBW_SOME_OPTION: value
         env:
           # List of platforms to build on
-          CIBW_BUILD: cp3{10,11,12,13}-manylinux_x86_64 cp3{10,11,12,13}-macosx_x86_64 cp3{10,11,12,13}-macosx_arm64 cp3{10,11,12,13}-win_amd64
+          CIBW_BUILD: cp3{10,11,12,13,14}-manylinux_x86_64 cp3{10,11,12,13,14}-macosx_x86_64 cp3{10,11,12,13,14}-macosx_arm64 cp3{10,11,12,13,14}-win_amd64
 
           # Install Eigen and pybind11 on manylinux images (no brew, need Eigen >= 3.4)
           CIBW_BEFORE_ALL_LINUX: >
-            sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* &&
-            sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-* &&
-            yum install -y wget &&
-            wget https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz &&
-            tar xzf eigen-3.4.0.tar.gz &&
-            cd eigen-3.4.0 &&
-            mkdir build &&
-            cd build &&
-            cmake .. &&
-            make install &&
-            cd ../..
+            curl -L https://gitlab.com/libeigen/eigen/-/archive/5.0.1/eigen-5.0.1.tar.gz -o eigen-5.0.1.tar.gz &&
+            tar xzf eigen-5.0.1.tar.gz &&
+            cmake -S eigen-5.0.1 -B eigen-build -DCMAKE_INSTALL_PREFIX=/usr/local -DEIGEN_BUILD_BLAS=OFF -DEIGEN_BUILD_LAPACK=OFF -DBUILD_TESTING=OFF &&
+            cmake --install eigen-build
+          CIBW_ENVIRONMENT_LINUX: 'CPATH="/usr/local/include/eigen3"'
           CIBW_BEFORE_BUILD_LINUX: pip install pybind11[global]
 
           # Install Eigen and pybind11 on macOS
           CIBW_BEFORE_ALL_MACOS: brew install eigen pybind11
+          CIBW_ENVIRONMENT_MACOS: 'CPLUS_INCLUDE_PATH="/opt/homebrew/include/eigen3:/usr/local/include/eigen3"'
 
-          # Install Eigen and pybind11 on Windows
-          CIBW_BEFORE_ALL_WINDOWS: choco install eigen
+          # Install Eigen and pybind11 on Windows images (no brew, need Eigen >= 3.4)
+          CIBW_BEFORE_ALL_WINDOWS: "choco install eigen -y"
+          CIBW_ENVIRONMENT_WINDOWS: 'CMAKE_ARGS="-DCMAKE_PREFIX_PATH=C:\ProgramData\chocolatey\lib\eigen -DCMAKE_INCLUDE_PATH=C:\ProgramData\chocolatey\lib\eigen\include\eigen3"'
           CIBW_BEFORE_BUILD_WINDOWS: pip install pybind11[global] delvewheel
 
           # cibuildwheel doesn't yet ship a default repair command for Windows

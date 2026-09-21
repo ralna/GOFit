@@ -14,6 +14,13 @@
 #include <functional>
 #include <Eigen/Core>
 
+// Eigen 5.0 moved all to the placeholders namespace to prevent global name clashes
+#if EIGEN_WORLD_VERSION == 3 && EIGEN_MAJOR_VERSION > 4
+namespace Eigen {
+    using namespace Eigen::placeholders;
+}
+#endif
+
 /*
  * Forward finite difference approximation to the Jacobian
  *
