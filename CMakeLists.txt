@@ -11,7 +11,7 @@ find_package(Python COMPONENTS Interpreter Development.Module REQUIRED)
 find_package(pybind11 CONFIG REQUIRED)
 
 # Find Eigen 3.4+
-find_package(Eigen3 3.4 REQUIRED)
+find_package(Eigen3 3.4...5 REQUIRED)
 
 # Add project sources to python module
 file(GLOB SOURCES src/*.cpp)
