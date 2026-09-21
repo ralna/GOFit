@@ -34,7 +34,7 @@ jobs:
             tar xzf eigen-5.0.1.tar.gz &&
             cmake -S eigen-5.0.1 -B eigen-build -DCMAKE_INSTALL_PREFIX=/usr/local -DEIGEN_BUILD_BLAS=OFF -DEIGEN_BUILD_LAPACK=OFF -DBUILD_TESTING=OFF &&
             cmake --install eigen-build
-          CIBW_ENVIRONMENT_LINUX: 'CMAKE_ARGS="-DCMAKE_PREFIX_PATH=/usr/local -DCMAKE_INCLUDE_PATH=/usr/local/include/eigen3"'
+          CIBW_ENVIRONMENT_LINUX: 'CPATH="/usr/local/include/eigen3"'
           CIBW_BEFORE_BUILD_LINUX: pip install pybind11[global]
 
           # Install Eigen and pybind11 on macOS
