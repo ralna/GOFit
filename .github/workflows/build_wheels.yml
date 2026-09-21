@@ -47,12 +47,7 @@ jobs:
 
           # Install Eigen and pybind11 on Windows images (no brew, need Eigen >= 3.4)
           CIBW_BEFORE_ALL_WINDOWS: |
-            powershell -Command {
-              Invoke-WebRequest -Uri "https://gitlab.com/libeigen/eigen/-/archive/5.0.1/eigen-5.0.1.zip" -OutFile "eigen.zip"
-              Expand-Archive -Path "eigen.zip" -DestinationPath "C:\eigen-src"
-              cmake -S "C:\eigen-src\eigen-5.0.1" -B "C:\eigen-build" -DCMAKE_INSTALL_PREFIX="C:\eigen"
-              cmake --install "C:\eigen-build"
-            }
+            powershell -Command "Invoke-WebRequest -Uri https://gitlab.com/libeigen/eigen/-/archive/5.0.1/eigen-5.0.1.zip -OutFile eigen.zip; Expand-Archive eigen.zip -DestinationPath C:\eigen-src; cmake -S C:\eigen-src\eigen-5.0.1 -B C:\eigen-build -DCMAKE_INSTALL_PREFIX=C:\eigen; cmake --install C:\eigen-build"
           CIBW_ENVIRONMENT_WINDOWS: 'CMAKE_PREFIX_PATH="C:\eigen"'
           CIBW_BEFORE_BUILD_WINDOWS: pip install pybind11[global] delvewheel
 
