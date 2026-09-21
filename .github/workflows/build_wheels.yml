@@ -47,8 +47,8 @@ jobs:
 
           # Install Eigen and pybind11 on Windows images (no brew, need Eigen >= 3.4)
           CIBW_BEFORE_ALL_WINDOWS: |
-            powershell -Command "Invoke-WebRequest -Uri https://gitlab.com/libeigen/eigen/-/archive/5.0.1/eigen-5.0.1.zip -OutFile eigen.zip; Expand-Archive eigen.zip -DestinationPath C:\eigen-src; cmake -S C:\eigen-src\eigen-5.0.1 -B C:\eigen-build -DCMAKE_INSTALL_PREFIX=C:\eigen-install -DEIGEN_BUILD_BLAS=OFF -DEIGEN_BUILD_LAPACK=OFF -DBUILD_TESTING=OFF; cmake --install C:\eigen-build; Move-Item C:\eigen-install\include\eigen3\Eigen C:\eigen-install\include\Eigen"
-          CIBW_ENVIRONMENT_WINDOWS: 'CMAKE_PREFIX_PATH="C:\eigen-install" Eigen3_DIR="C:\eigen-install\share\eigen3\cmake" CMAKE_INCLUDE_PATH="C:\eigen-install\include"'
+            powershell -Command "Invoke-WebRequest -Uri https://gitlab.com/libeigen/eigen/-/archive/5.0.1/eigen-5.0.1.zip -OutFile eigen.zip; Expand-Archive eigen.zip -DestinationPath C:\eigen-src; cmake -S C:\eigen-src\eigen-5.0.1 -B C:\eigen-build -DCMAKE_INSTALL_PREFIX=C:\eigen-install -DEIGEN_BUILD_BLAS=OFF -DEIGEN_BUILD_LAPACK=OFF -DBUILD_TESTING=OFF; cmake --install C:\eigen-build"
+          CIBW_CONFIG_SETTINGS_WINDOWS: "cmake.args=-DCMAKE_PREFIX_PATH=C:\\eigen-install -DCMAKE_INCLUDE_PATH=C:\\eigen-install\\include\\eigen3"
           CIBW_BEFORE_BUILD_WINDOWS: pip install pybind11[global] delvewheel
 
           # cibuildwheel doesn't yet ship a default repair command for Windows
