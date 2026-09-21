@@ -31,7 +31,7 @@ jobs:
         export CPLUS_INCLUDE_PATH="/home/linuxbrew/.linuxbrew/opt/eigen/include/eigen3:$CPLUS_INCLUDE_PATH"
         export CMAKE_PREFIX_PATH="/home/linuxbrew/.linuxbrew/opt/eigen"
         export CMAKE_ARGS="-DCMAKE_PREFIX_PATH=/home/linuxbrew/.linuxbrew/opt/eigen"
-        pip install . --no-build-isolation
+        pip install .
     - name: Tests
       run: |
         pip install numpy --only-binary=numpy
