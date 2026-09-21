@@ -11,7 +11,10 @@ find_package(Python COMPONENTS Interpreter Development.Module REQUIRED)
 find_package(pybind11 CONFIG REQUIRED)
 
 # Find Eigen 3.4+
-find_package(Eigen3 3.4 REQUIRED)
+find_package(Eigen3 REQUIRED)
+if(Eigen3_VERSION VERSION_LESS "3.4.0")
+    message(FATAL_ERROR "Eigen3 version ${Eigen3_VERSION} is too old. GOFit requires at least version 3.4")
+endif()
 
 # Add project sources to python module
 file(GLOB SOURCES src/*.cpp)
