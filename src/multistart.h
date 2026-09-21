@@ -13,6 +13,13 @@
 
 #include "regularisation.h"
 
+// Eigen 5.0 moved all to the placeholders namespace to prevent global name clashes
+#if EIGEN_WORLD_VERSION >= 5 || (EIGEN_WORLD_VERSION == 3 && EIGEN_MAJOR_VERSION > 4)
+namespace Eigen {
+    using namespace Eigen::placeholders;
+}
+#endif
+
 /*
  * Multistart adaptive quadratic regularisation
  *
