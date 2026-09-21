@@ -46,15 +46,8 @@ jobs:
           CIBW_ENVIRONMENT_MACOS: "CPLUS_INCLUDE_PATH='/opt/homebrew/include/eigen3'"
 
           # Install Eigen and pybind11 on Windows images (no brew, need Eigen >= 3.4)
-          CIBW_BEFORE_ALL_WINDOWS: """
-            powershell -Command "\
-            Invoke-WebRequest \
-              -Uri https://gitlab.com/libeigen/eigen/-/archive/5.0.1/eigen-5.0.1.zip \
-              -OutFile eigen.zip; \
-            Expand-Archive eigen.zip -DestinationPath C:\\eigen; \
-            Move-Item C:\\eigen\\eigen-5.0.1 C:\\eigen\\include\
-            "
-          """
+          CIBW_BEFORE_ALL_WINDOWS: |
+            powershell -Command "Invoke-WebRequest -Uri https://gitlab.com/libeigen/eigen/-/archive/5.0.1/eigen-5.0.1.zip -OutFile eigen.zip; Expand-Archive eigen.zip -DestinationPath C:\eigen; Move-Item C:\eigen\eigen-5.0.1 C:\eigen\include"
           CIBW_BEFORE_BUILD_WINDOWS: pip install pybind11[global] delvewheel
 
           # cibuildwheel doesn't yet ship a default repair command for Windows
