@@ -132,7 +132,7 @@ setup(
         "Documentation": "https://ralna.github.io/GOFit/",
         "Source Code": "https://github.com/ralna/gofit/",
     },
-    license='New BSD',
+    license='BSD-3-Clause',
     keywords = "mathematics optimization",
     classifiers=[
         'Development Status :: 5 - Production/Stable',
@@ -140,7 +140,6 @@ setup(
         'Framework :: IPython',
         'Framework :: Jupyter',
         'Intended Audience :: Science/Research',
-        'License :: OSI Approved :: BSD License',
         'Operating System :: Unix',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
